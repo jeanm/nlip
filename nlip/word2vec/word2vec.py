@@ -13,17 +13,6 @@ floatX = np.float32
 logging.basicConfig(level=logging.INFO,format="[%(funcName)s] %(message)s")
 logger = logging.getLogger(__name__)
 
-def _bisect_right(a, x, lo=0, hi=None):
-    if lo < 0:
-        raise ValueError('lo must be non-negative')
-    if hi is None:
-        hi = len(a)
-    while lo < hi:
-        mid = (lo+hi)//2
-        if x > a[mid]: hi = mid
-        else: lo = mid+1
-    return lo
-
 class Word2Vec():
 
     def __init__(self, dimension=100, alpha=0.025, window=5, negative=5,
@@ -44,15 +33,6 @@ class Word2Vec():
             self.dev_words = [(x,y) for x,y,*_ in dev_data]
             self.devsims = np.asarray([float(x) for _,_,x,*_ in dev_data])
             self.dev = True
-
-    def _prune_vocab(self, min_count):
-        # note: assuming the words to be sorted by descending count
-        limit = _bisect_right(self.index2count, min_count)
-        oldlen = len(self.index2word)
-        self.index2word = self.index2word[:limit]
-        self.index2count = self.index2count[:limit]
-        self.word2index = {e:i for i,e in enumerate(self.index2word)}
-        logger.info("min_count=%d got rid of %d words", min_count, si(oldlen-len(self.index2word)))
 
     def _downsample_vocab(self):
         retain_total = sum(self.index2count)
@@ -93,9 +73,7 @@ class Word2Vec():
         if len(self.ns_table) > 0:
             assert self.ns_table[-1] == domain
 
-    def _finalise_vocab(self, min_count):
-        # remove all words below min_count
-        self._prune_vocab(min_count)
+    def _finalise_vocab(self):
         # precalculate sampling thresholds for words
         self._downsample_vocab()
         # build the table for drawing random words (for negative sampling)
@@ -103,7 +81,7 @@ class Word2Vec():
         # set initial input/projection and hidden weights
         self.reset_weights()
 
-    def load_vocab(self, vocab_infile, min_count=5):
+    def load_vocab(self, vocab_infile):
         self.index2word = []
         self.index2count = []
         with smart_open(vocab_infile, 'r') as f:
@@ -112,7 +90,7 @@ class Word2Vec():
                 self.index2word.append(tokens[0])
                 self.index2count.append(int(tokens[1]))
         logger.info("loaded a word vocabulary of size %s", si(len(self.index2word)))
-        self._finalise_vocab(min_count=min_count)
+        self._finalise_vocab()
 
     def reset_weights(self, what=None):
         vocabsize = len(self.index2word)

@@ -142,7 +142,6 @@ def train_sentence(model, sentence, alpha, _syn0, _work):
     cdef np.uint32_t reduced_windows[MAX_SENTENCE_LEN]
     cdef int sentence_len
     cdef int window = model.window
-    cdef unsigned long long vocab_len = len(model.index2word)
 
     cdef int i, j, k
     cdef long result = 0
@@ -164,8 +163,6 @@ def train_sentence(model, sentence, alpha, _syn0, _work):
     i = 0
     for word in sentence:
         if sample and sample_int[word] < random_int32(&next_random): # subsampling
-            continue
-        if word >= vocab_len: # word not in vocabulary
             continue
         indices[i] = word
         i += 1
@@ -205,7 +202,6 @@ def train_tuple(model, example, alpha, _syn0, _work):
     cdef np.uint32_t indices[MAX_2WINDOW_LEN]
     cdef np.uint32_t reduced_window = np.random.randint(0,len(example)-1)
     cdef int sentence_len, i
-    cdef unsigned long long vocab_len = len(model.index2word)
 
     # for negative sampling
     cdef np.uint32_t *ns_table
@@ -225,8 +221,6 @@ def train_tuple(model, example, alpha, _syn0, _work):
     i = 0
     for word in example[1:]:
         if sample and sample_int[word] < random_int32(&next_random): # subsampling
-            continue
-        if word >= vocab_len: # word not in vocabulary
             continue
         indices[i] = word
         i += 1
