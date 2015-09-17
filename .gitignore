@@ -1,0 +1,8 @@
+*~
+*.swp
+*.swo
+*.so
+*.c
+*.vim
+*.py[cod]
+__pycache__
