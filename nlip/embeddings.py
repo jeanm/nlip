@@ -12,11 +12,11 @@ class Embeddings():
     These can be instantiated in the following ways:
         Embeddings((A, index2word))
             with an array ``A`` with one embeddings per row,
-            and a list of words `index2word`
+            and a list of words ``index2word``.
 
         Embeddings((A, index2word, index2count))
             with an array ``A`` with one embeddings per row,
-            a list of words ``index2word``, a list of counts ``index2count``
+            a list of words ``index2word``, a list of counts ``index2count``.
 
         Embeddings(filename)
             with a HDF5 file containing the datasets ``A``, ``index2word``,
@@ -90,12 +90,12 @@ class SparseEmbeddings():
     These can be instantiated in the following ways:
         SparseEmbeddings(((I,J,V), index2word))
             with a triplet ``I,J,V`` of lists containing row indices,
-            column indices, and values, and a list of words `index2word`
+            column indices, and values, and a list of words ``index2word``.
 
         SparseEmbeddings(((I,J,V), index2word, index2count))
             with a triplet ``I,J,V`` of lists containing row indices,
-            column indices, and values, a list of words `index2word`,
-            and a list of counts ``index2count``
+            column indices, and values, a list of words ``index2word``,
+            and a list of counts ``index2count``.
 
         SparseEmbeddings(filename)
             with a HDF5 file containing the datasets ``I``, ``J``, ``V``,
