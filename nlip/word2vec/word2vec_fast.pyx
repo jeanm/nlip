@@ -133,7 +133,7 @@ def train_sentence(model, sentence, alpha, _syn0, _work):
     cdef int sample = (model.sample != 0)
 
     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))
-    cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.syn1))
+    cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))
     cdef floatX_t *work
     cdef floatX_t _alpha = alpha
     cdef int size = model.dim
@@ -159,7 +159,7 @@ def train_sentence(model, sentence, alpha, _syn0, _work):
     # convert Python structures to primitive types, so we can release the GIL
     work = <floatX_t *>np.PyArray_DATA(_work)
 
-    sample_int = model.index2sample_int
+    sample_int = model.index2sample
     i = 0
     for word in sentence:
         if sample and sample_int[word] < random_int32(&next_random): # subsampling
@@ -193,7 +193,7 @@ def train_tuple(model, example, alpha, _syn0, _work):
     cdef int sample = (model.sample != 0)
 
     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))
-    cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.syn1))
+    cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))
     cdef floatX_t *work
     cdef floatX_t _alpha = alpha
     cdef int size = model.dim
@@ -217,7 +217,7 @@ def train_tuple(model, example, alpha, _syn0, _work):
     work = <floatX_t *>np.PyArray_DATA(_work)
 
     # build reduced window and downsample
-    sample_int = model.index2sample_int
+    sample_int = model.index2sample
     i = 0
     for word in example[1:]:
         if sample and sample_int[word] < random_int32(&next_random): # subsampling

@@ -4,9 +4,9 @@ from collections import defaultdict, Counter
 import numpy as np
 from scipy.stats import spearmanr
 from scipy.spatial.distance import cosine
-from word2vec_fast import train_sentence, train_tuple
+from .word2vec_fast import train_sentence, train_tuple
 from nlip import Embeddings
-from nlip.utils import si, hms, smart_open
+from nlip.utils import si, smart_open, Timer
 
 floatX = np.float32
 
@@ -90,6 +90,7 @@ class Word2Vec():
                 self.index2word.append(tokens[0])
                 self.index2count.append(int(tokens[1]))
         logger.info("loaded a word vocabulary of size %s", si(len(self.index2word)))
+        self.word2index = {e:i for i,e in enumerate(self.index2word)}
         self._finalise_vocab()
 
     def reset_weights(self, what=None):
@@ -106,7 +107,7 @@ class Word2Vec():
         return spearmanr(scores,self.devsims)
 
     def train_sentences(self, corpus_infile, epochs=1, report_freq=20):
-        if len(self.index2sample) == 0:julia AbstractSparseMatrix
+        if len(self.index2sample) == 0:
             logger.error("attempted to start training but vocabulary has not been loaded")
             raise RuntimeError("You must build/load the vocabulary before training the model")
         epochs = int(epochs) or 1
@@ -117,11 +118,12 @@ class Word2Vec():
         with smart_open(corpus_infile, 'r') as fin:
             total_words = 0
             # read the number of sentences in the corpus
-            corpus_sentences = int(next(fin).strip().split())
+            corpus_sentences = int(next(fin).strip())
             total_sentences = epochs * corpus_sentences
             logger.info("loaded corpus with %s sentences, training for %d epochs", si(corpus_sentences), epochs)
 
-            start, next_report = time.time(), report_freq
+            t = Timer(interval=report_freq)
+            t.tic()
             word_count = 0
             for epoch in range(epochs):
                 fin.seek(0)
@@ -131,22 +133,20 @@ class Word2Vec():
                     sentence = list(map(int,line.strip().split()))
                     word_count += len(sentence)
                     train_sentence(self, sentence, alpha, embeddings, work)
-                    elapsed = time.time() - start
-                    if elapsed >= next_report:
+                    if t.ready():
+                        t.toc()
                         if self.dev:
                             cor = self.test_dev(embeddings)
                             logger.info("%.2f%% sentences @ %s words/s, alpha %.6f, corr %.5f (p %.2e)" %
-                                (100 * sentence_num / total_sentences, si(word_count / report_freq), alpha, cor[0], cor[1]))
+                                (100 * sentence_num / total_sentences, si(word_count / t.interval), alpha, cor[0], cor[1]))
                         else:
                             logger.info("%.2f%% sentences @ %s words/s, alpha %.6f" %
-                                (100 * sentence_num / total_sentences, si(word_count / report_freq), alpha))
-                        next_report = elapsed + report_freq
+                                (100 * sentence_num / total_sentences, si(word_count / t.interval), alpha))
                         total_words += word_count
                         word_count = 0
-                elapsed = time.time() - start
                 total_words += word_count
         logger.info("trained on %s sentences (%s words) in %s @ %s words/s" %
-                (si(total_sentences), si(total_words), hms(elapsed),
+                (si(total_sentences), si(total_words), t.toc(hms=True),
                     si(total_words / elapsed if elapsed else 0.0)))
         cor = self.test_dev(embeddings)
         logger.info("correlation on development set %.5f (p %.2e)" % cor)
@@ -166,7 +166,7 @@ class Word2Vec():
             for line_num,line in enumerate(fvoc):
                 tokens = line.strip().split()
                 index2word_comp.append(tokens[0])
-                index2count_comp = append.(tokens[1])
+                index2count_comp.append(tokens[1])
                 vocabsize += 1
 
         # initialise temporary work memory and compound vectors
@@ -177,11 +177,12 @@ class Word2Vec():
         with smart_open(corpus_infile, 'r') as fin:
             total_words = 0
             # read the number of sentences in the corpus
-            corpus_sentences = int(next(fin).strip().split())
+            corpus_sentences = int(next(fin).strip())
             total_sentences = epochs * corpus_sentences
             logger.info("loaded corpus with %s examples, training for %d epochs", si(corpus_sentences), epochs)
 
-            start, next_report = time.time(), report_freq
+            t = Timer(interval=report_freq)
+            t.tic()
             word_count = 0
             for epoch in range(epochs):
                 fin.seek(0)
@@ -192,17 +193,16 @@ class Word2Vec():
                     sentence = list(map(int,line.strip().split()))
                     word_count += len(sentence)-1
                     train_tuple(self, sentence, alpha, embeddings, work)
-                    elapsed = time.time() - start
-                    if elapsed >= next_report:
+                    if t.ready():
+                        t.toc()
                         logger.info("%.2f%% examples @ %s words/s, alpha %.6f" %
-                            (100 * sentence_num / total_sentences, si(word_count / report_freq), alpha))
+                            (100 * sentence_num / total_sentences, si(word_count / t.interval), alpha))
                         next_report = elapsed + report_freq
                         total_words += word_count
                         word_count = 0
-                elapsed = time.time() - start
                 total_words += word_count
         logger.info("trained on %s words (%s examples) in %s @ %s words/s" %
-                (si(total_words), si(total_sentences), hms(elapsed),
+                (si(total_words), si(total_sentences), t.toc(hms=True),
                     si(total_words / elapsed if elapsed else 0.0)))
         return Embeddings(A=embeddings, index2word=index2word_comp, index2count=index2count_comp)
 
