@@ -56,7 +56,7 @@ class Embeddings():
                 self.A = np.asarray(arg1[0], dtype=floatX)
                 self.shape = self.A.shape
                 self.index2word = arg1[1]
-            elif len(arg2) == 3:
+            elif len(arg1) == 3:
                 self.A = np.asarray(arg1[0], dtype=floatX)
                 self.shape = self.A.shape
                 self.index2word = arg1[1]
@@ -137,7 +137,7 @@ class SparseEmbeddings():
                 self.A = csr_matrix((arg1[0][2],(arg1[0][0],arg1[0][1])), dtype=floatX)
                 self.shape = self.A.shape
                 self.index2word = arg1[1]
-            elif len(arg2) == 3:
+            elif len(arg1) == 3:
                 if len(arg1[0]) != 3:
                     raise TypeError("Invalid input format")
                 self.A = csr_matrix((arg1[0][2],(arg1[0][0],arg1[0][1])), dtype=floatfloatXX)

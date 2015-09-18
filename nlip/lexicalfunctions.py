@@ -57,7 +57,7 @@ class LexicalFunctions():
                 self.A = np.asarray(arg1[0], dtype=floatX)
                 self.shape = self.A.shape
                 self.index2word = arg1[1]
-            elif len(arg2) == 3:
+            elif len(arg1) == 3:
                 self.A = np.asarray(arg1[0], dtype=floatX)
                 self.shape = self.A.shape
                 self.index2word = arg1[1]
