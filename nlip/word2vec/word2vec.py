@@ -17,8 +17,8 @@ class Word2Vec():
 
     def __init__(self, dimension=100, alpha=0.025, window=5, negative=5,
             sample=1e-3, dev_data=None):
-        self.word2index = {} # string -> word index
-        self.index2word = [] # word index -> string
+        self.name2index = {} # string -> word index
+        self.index2name = [] # word index -> string
         self.index2count = [] # word index -> word count
         self.index2sample = [] # word index -> word sampling threshold
         self.ns_table = None
@@ -46,7 +46,7 @@ class Word2Vec():
 
         self.index2sample_id = []
         downsample_total, downsample_unique = 0, 0
-        for w in range(len(self.index2word)):
+        for w in range(len(self.index2name)):
             v = self.index2count[w]
             word_probability = (np.sqrt(v / threshold_count) + 1) * (threshold_count / v)
             if word_probability < 1.0:
@@ -62,7 +62,7 @@ class Word2Vec():
                     downsample_total * 100.0 / max(retain_total, 1))
 
     def _make_ns_table(self, power=0.75, domain=2**31 - 1):
-        vocabsize = len(self.index2word)
+        vocabsize = len(self.index2name)
         self.ns_table = np.zeros(vocabsize, dtype=np.uint32)
         # compute sum of all power (Z in paper)
         train_words_pow = float(sum([self.index2count[index]**power for index in range(vocabsize)]))
@@ -82,26 +82,26 @@ class Word2Vec():
         self.reset_weights()
 
     def load_vocab(self, vocab_infile):
-        self.index2word = []
+        self.index2name = []
         self.index2count = []
         with smart_open(vocab_infile, 'r') as f:
             for line_num,line in enumerate(f):
                 tokens = line.strip().split()
-                self.index2word.append(tokens[0])
+                self.index2name.append(tokens[0])
                 self.index2count.append(int(tokens[1]))
-        logger.info("loaded a word vocabulary of size %s", si(len(self.index2word)))
-        self.word2index = {e:i for i,e in enumerate(self.index2word)}
+        logger.info("loaded a word vocabulary of size %s", si(len(self.index2name)))
+        self.name2index = {e:i for i,e in enumerate(self.index2name)}
         self._finalise_vocab()
 
     def reset_weights(self, what=None):
-        vocabsize = len(self.index2word)
+        vocabsize = len(self.index2name)
         self.contexts = np.zeros((vocabsize, self.dim), dtype=floatX, order='C')
         logger.info('initialised a %s x %s context matrix', si(vocabsize), si(self.dim))
 
     def test_dev(self, embed):
         # array of dot products between pairs of (normalised) noun vectors
         # in the development set
-        scores = np.asarray([1-cosine(embed[self.word2index[a]],embed[self.word2index[b]]) for a,b in self.dev_words])
+        scores = np.asarray([1-cosine(embed[self.name2index[a]],embed[self.name2index[b]]) for a,b in self.dev_words])
         # return spearman rank between human similarity judgements and
         # our own similarity judgements
         return spearmanr(scores,self.devsims)
@@ -113,8 +113,8 @@ class Word2Vec():
         epochs = int(epochs) or 1
         # initialise temporary work memory and word vectors
         work = np.zeros(self.dim, dtype=floatX)
-        embeddings = np.ascontiguousarray((np.random.rand(len(self.index2word), self.dim) - 0.5) / self.dim,dtype=floatX)
-        logger.info("initialised a %s x %s embedding matrix", si(len(self.index2word)), si(self.dim))
+        embeddings = np.ascontiguousarray((np.random.rand(len(self.index2name), self.dim) - 0.5) / self.dim,dtype=floatX)
+        logger.info("initialised a %s x %s embedding matrix", si(len(self.index2name)), si(self.dim))
         with smart_open(corpus_infile, 'r') as fin:
             total_words = 0
             # read the number of sentences in the corpus
@@ -150,7 +150,7 @@ class Word2Vec():
                     si(total_words / t.toc())))
         cor = self.test_dev(embeddings)
         logger.info("correlation on development set %.5f (p %.2e)" % cor)
-        return Embeddings((embeddings, self.index2word, self.index2count))
+        return Embeddings((embeddings, self.index2name, self.index2count))
 
     def train_tuples(self, corpus_infile, compound_vocab_infile,
             epochs=1, report_freq=20):
@@ -158,14 +158,14 @@ class Word2Vec():
             logger.error("attempted to start training but vocabulary has not been loaded")
             raise RuntimeError("You must build/load the vocabulary before training the model")
         epochs = int(epochs) or 1
-        index2word_comp = []
+        index2name_comp = []
         index2count_comp = []
         # count the number of compound vectors to be learned
         vocabsize = 0
         with smart_open(compound_vocab_infile, 'r') as fvoc:
             for line_num,line in enumerate(fvoc):
                 tokens = line.strip().split()
-                index2word_comp.append(tokens[0])
+                index2name_comp.append(tokens[0])
                 index2count_comp.append(tokens[1])
                 vocabsize += 1
 
@@ -203,16 +203,16 @@ class Word2Vec():
         logger.info("trained on %s words (%s examples) in %s @ %s words/s" %
                 (si(total_words), si(total_sentences), t.toc(hms=True),
                     si(total_words / t.toc())))
-        return Embeddings((embeddings, index2word_comp, index2count_comp))
+        return Embeddings((embeddings, index2name_comp, index2count_comp))
 
     # save/load context vectors
     def get_contexts(self):
-        return Embeddings((self.contexts, self.index2word, self.index2count))
+        return Embeddings((self.contexts, self.index2name, self.index2count))
     def load_contexts(self, contexts):
         shape = contexts.A.shape
-        if shape[0] != len(contexts.index2word) or shape[1] != self.dim:
+        if shape[0] != len(contexts.index2name) or shape[1] != self.dim:
             logger.error("vocabulary/contexts shape mismatch")
             raise RuntimeError("vocabulary/contexts shape mismatch")
         self.contexts = contexts.A
-        self.index2word = contexts.index2word
+        self.index2name = contexts.index2name
         self.index2count = contexts.index2count
