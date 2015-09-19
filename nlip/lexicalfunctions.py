@@ -2,6 +2,7 @@ import numpy as np
 import h5py
 from scipy import sparse
 from nlip.utils import smart_open
+from nlip import floatX
 
 class LexicalFunctions():
     """
@@ -38,7 +39,7 @@ class LexicalFunctions():
 
     """
 
-    def __init__(self, arg1):
+    def __init__(self, arg1=None):
         self.index2word = []
         self.word2index = {}
         self.index2count = []
