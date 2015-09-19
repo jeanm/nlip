@@ -50,7 +50,7 @@ class Embeddings():
             if "index2count" in self.f:
                 self.index2count = self.f["index2count"][:]
         elif isinstance(arg1, np.ndarray):
-            self.A = np.asarray(arg1[0], dtype=floatX)
+            self.A = np.asarray(arg1, dtype=floatX)
             self.shape = self.A.shape
             if isinstance(arg2, (list, np.ndarray)):
                 self.index2name = arg2
