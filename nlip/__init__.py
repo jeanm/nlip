@@ -4,4 +4,4 @@ floatX = np.float32
 
 from .embeddings import *
 from .lexicalfunctions import *
-from .sparsecounts import *
+from .wordfeaturematrix import *
