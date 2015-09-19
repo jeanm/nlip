@@ -147,10 +147,10 @@ class Word2Vec():
                 total_words += word_count
         logger.info("trained on %s sentences (%s words) in %s @ %s words/s" %
                 (si(total_sentences), si(total_words), t.toc(hms=True),
-                    si(total_words / elapsed if elapsed else 0.0)))
+                    si(total_words / t.toc())))
         cor = self.test_dev(embeddings)
         logger.info("correlation on development set %.5f (p %.2e)" % cor)
-        return Embeddings(A=embeddings, index2word=self.index2word)
+        return Embeddings((embeddings, self.index2word, self.index2count))
 
     def train_tuples(self, corpus_infile, compound_vocab_infile,
             epochs=1, report_freq=20):
@@ -197,19 +197,17 @@ class Word2Vec():
                         t.toc()
                         logger.info("%.2f%% examples @ %s words/s, alpha %.6f" %
                             (100 * sentence_num / total_sentences, si(word_count / t.interval), alpha))
-                        next_report = elapsed + report_freq
                         total_words += word_count
                         word_count = 0
                 total_words += word_count
         logger.info("trained on %s words (%s examples) in %s @ %s words/s" %
                 (si(total_words), si(total_sentences), t.toc(hms=True),
-                    si(total_words / elapsed if elapsed else 0.0)))
-        return Embeddings(A=embeddings, index2word=index2word_comp, index2count=index2count_comp)
+                    si(total_words / t.toc())))
+        return Embeddings((embeddings, index2word_comp, index2count_comp))
 
     # save/load context vectors
-    def contexts(self):
-        return Embeddings(A=self.contexts, index2word=self.index2word,
-                index2count=self.index2count)
+    def get_contexts(self):
+        return Embeddings((self.contexts, self.index2word, self.index2count))
     def load_contexts(self, contexts):
         shape = contexts.A.shape
         if shape[0] != len(contexts.index2word) or shape[1] != self.dim:
