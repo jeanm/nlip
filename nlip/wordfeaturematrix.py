@@ -4,7 +4,6 @@ from scipy.sparse import coo_matrix, issparse
 from sklearn.neighbors import NearestNeighbors
 from nlip.utils import smart_open
 from nlip import floatX
-from copy import deepcopy
 
 class WordFeatureMatrix():
     """
@@ -26,8 +25,8 @@ class WordFeatureMatrix():
 
         WordFeatureMatrix(filename)
             with a HDF5 file containing the datasets ``I``, ``J``, ``V``,
-            ``index2name``; and optionally ``index2count``, ``index2name_f``,
-            and ``index2count_f``.
+            ``shape`` ``index2name``; and optionally ``index2count``,
+            ``index2name_f``, and ``index2count_f``.
 
     Attributes
     ----------
@@ -58,7 +57,7 @@ class WordFeatureMatrix():
         if isinstance(arg1, str):
             with h5py.File(arg1) as f:
                 self.A = coo_matrix((f["V"][:],(f["I"][:],f["J"][:])), dtype=floatX)
-                self.shape = self.A.shape
+                self.shape = tuple(f["shape"][:])
                 self.index2name = f["index2name"][:]
                 self.name2index = {e:i for i,e in enumerate(self.index2name)}
                 if "index2name_f" in f:
@@ -75,12 +74,10 @@ class WordFeatureMatrix():
                         self.index2count_f = self.index2count
         # we are given an IJV triplet as 1st arg
         elif isinstance(arg1, tuple):
-            if len(arg1[0]) != 3: # must be a triplet
+            if len(arg1) != 3: # must be a triplet
                 raise TypeError("First argument must be a triplet of lists")
-            self.A = coo_matrix((arg1[0][2],(arg1[0][0],arg1[0][1])), dtype=floatX)
-            self.shape = self.A.shape
             # second argument: list(s) of names
-            if isinstance(arg2, list):
+            if isinstance(arg2, (list, np.ndarray)):
                 self.index2name = arg2
                 self.name2index = {e:i for i,e in enumerate(self.index2name)}
                 self.index2name_f = self.index2name
@@ -91,7 +88,9 @@ class WordFeatureMatrix():
                 self.index2name_f = arg2[1]
                 self.name2index_f = {e:i for i,e in enumerate(self.index2name_f)}
             else:
-                return TypeError("Second argument must be a list or pair of lists")
+                raise TypeError("Second argument must be a list or pair of lists")
+            self.shape = (len(self.index2name),len(self.index2name_f))
+            self.A = coo_matrix((arg1[2],(arg1[0],arg1[1])), shape=self.shape, dtype=floatX)
             # third argument: list(s) of counts
             if isinstance(arg3, (list, np.ndarray)):
                 self.index2count = arg3
@@ -100,7 +99,7 @@ class WordFeatureMatrix():
                 self.index2count = arg3[0]
                 self.index2count_f = arg3[1]
             else:
-                return TypeError("Third argument must be a list or pair of lists")
+                raise TypeError("Third argument must be a list or pair of lists")
         else:
             raise TypeError("Invalid input format")
 
@@ -117,10 +116,11 @@ class WordFeatureMatrix():
             f.create_dataset("I", data=np.asarray(coo.row,dtype=np.uint32))
             f.create_dataset("J", data=np.asarray(coo.col,dtype=np.uint32))
             f.create_dataset("V", data=np.asarray(coo.data,dtype=floatX))
+            f.create_dataset("shape", data=np.asarray(self.shape,dtype=np.uint32))
             f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
             f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.uint32))
 
-    def scale(self, weights, what="rows"):
+    def scale(self, weights, what="words"):
         """
         Scales rows or columns of the IJV sparse matrix.
 
@@ -135,21 +135,35 @@ class WordFeatureMatrix():
         weights : array_like
             list of weights assigned to each index
         what : str
-            ``rows`` or ``columns``
+            ``words`` (default) or ``features``
 
-        Returns
-        -------
-        WordFeatureMatrix
-            a scaled copy of ``self``
         """
         weights = np.asarray(weights)
-        if what is "rows":
-            newcounts = deepcopy(self)
-            newcounts.A.data = np.multiply(self.A.data,weights[self.A.row])
-            return newcounts
-        elif what is "cols":
-            newcounts = deepcopy(self)
-            newcounts.A.data = np.multiply(self.A.data,weights[self.A.col])
-            return newcounts
+        if what is "words":
+            self.A.data = np.multiply(self.A.data,weights[self.A.row])
+        elif what is "features":
+            self.A.data = np.multiply(self.A.data,weights[self.A.col])
         else:
-            raise ValueError("'what' must be either 'rows' or 'cols'")
+            raise ValueError("'what' must be either 'words' or 'features'")
+
+    def ppmi(self, cds=1):
+        """
+        Applies Positive Pointwise Mutual Information to the matrix
+
+        Arguments
+        ---------
+        cds : float
+            Context distibution smoothing exponent.
+            Default is 1, i.e. no context distribution smoothing.
+
+        """
+        data = self.A.data
+        row = self.A.row
+        col = self.A.col
+        rowsums = np.bincount(row, weights=data, minlength=len(self.index2name))
+        print(np.sum(rowsums))
+        colsums = np.power(np.bincount(col, weights=data, minlength=len(self.index2name)), cds)
+        print(np.sum(colsums))
+        total = np.power(np.sum(data), cds)
+        print(total)
+        self.A.data = np.maximum(np.log(total*data/(rowsums[row]*colsums[col])),0)
