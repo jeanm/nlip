@@ -52,7 +52,7 @@ class Embeddings():
         elif isinstance(arg1, np.ndarray):
             self.A = np.asarray(arg1[0], dtype=floatX)
             self.shape = self.A.shape
-            if isinstance(arg2, list):
+            if isinstance(arg2, (list, np.ndarray)):
                 self.index2name = arg2
                 self.name2index = {e:i for i,e in enumerate(self.index2name)}
             if isinstance(arg3, (list, np.ndarray)):
