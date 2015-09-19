@@ -9,14 +9,11 @@ class LexicalFunctions():
     Matrix Lexical Functions.
 
     These can be instantiated in the following ways:
-        LexicalFunctions((A, index2name))
-            with a third-order array ``A`` (the first dimension indexing
-            functions), and a list of function names ``index2name``.
 
-        LexicalFunctions((A, index2name, index2count))
+        LexicalFunctions(A, index2name [, index2count])
             with a third-order array ``A`` (the first dimension indexing
-            functions), a list of function names ``index2name``, and a list of
-            counts ``index2count``.
+            functions), a list of function names ``index2name``, and optionally
+            a list of counts ``index2count``.
 
         LexicalFunctions(filename)
             with a HDF5 file containing the datasets ``A``, ``index2name``,
@@ -53,21 +50,18 @@ class LexicalFunctions():
             self.name2index = {e:i for i,e in enumerate(self.index2name)}
             if "index2count" in self.f:
                 self.index2count = self.f["index2count"][:]
-        elif isinstance(arg1, tuple):
-            if len(arg1) == 2:
-                self.A = np.asarray(arg1[0], dtype=floatX)
-                self.shape = self.A.shape
-                self.index2name = arg1[1]
-            elif len(arg1) == 3:
-                self.A = np.asarray(arg1[0], dtype=floatX)
-                self.shape = self.A.shape
-                self.index2name = arg1[1]
-                self.index2count = arg1[2]
+        elif isinstance(arg1, np.ndarray):
+            self.A = np.asarray(arg1[0], dtype=floatX)
+            self.shape = self.A.shape
+            if isinstance(arg2, list):
+                self.index2name = arg2
+                self.name2index = {e:i for i,e in enumerate(self.index2name)}
+            if isinstance(arg3, (list, np.ndarray)):
+                self.index2count = arg3
                 if len(self.index2name) != len(self.index2count):
                     raise ValueError("Vocabulary and counts must have the same length")
-            else:
-                raise TypeError("Invalid input format")
-            self.name2index = {e:i for i,e in enumerate(self.index2name)}
+        else:
+            raise TypeError("Invalid input format")
 
     def __getitem__(self, index):
         return self.A[index]

@@ -10,13 +10,11 @@ class Embeddings():
     Embeddings in dense format.
 
     These can be instantiated in the following ways:
-        Embeddings((A, index2name))
-            with an array ``A`` with one embeddings per row,
-            and a list of words ``index2name``.
 
-        Embeddings((A, index2name, index2count))
+        Embeddings(A, index2name [, index2count])
             with an array ``A`` with one embeddings per row,
-            a list of words ``index2name``, a list of counts ``index2count``.
+            a list of words ``index2name``, and optionally a list of counts
+            ``index2count``.
 
         Embeddings(filename)
             with a HDF5 file containing the datasets ``A``, ``index2name``,
@@ -37,7 +35,7 @@ class Embeddings():
 
     """
 
-    def __init__(self, arg1=None):
+    def __init__(self, arg1=None, arg2=None, arg3=None):
         self.index2name = []
         self.name2index = {}
         self.index2count = []
@@ -51,21 +49,18 @@ class Embeddings():
             self.name2index = {e:i for i,e in enumerate(self.index2name)}
             if "index2count" in self.f:
                 self.index2count = self.f["index2count"][:]
-        elif isinstance(arg1, tuple):
-            if len(arg1) == 2:
-                self.A = np.asarray(arg1[0], dtype=floatX)
-                self.shape = self.A.shape
-                self.index2name = arg1[1]
-            elif len(arg1) == 3:
-                self.A = np.asarray(arg1[0], dtype=floatX)
-                self.shape = self.A.shape
-                self.index2name = arg1[1]
-                self.index2count = arg1[2]
+        elif isinstance(arg1, np.ndarray):
+            self.A = np.asarray(arg1[0], dtype=floatX)
+            self.shape = self.A.shape
+            if isinstance(arg2, list):
+                self.index2name = arg2
+                self.name2index = {e:i for i,e in enumerate(self.index2name)}
+            if isinstance(arg3, (list, np.ndarray)):
+                self.index2count = arg3
                 if len(self.index2name) != len(self.index2count):
                     raise ValueError("Vocabulary and counts must have the same length")
-            else:
-                raise TypeError("Invalid input format")
-            self.name2index = {e:i for i,e in enumerate(self.index2name)}
+        else:
+            raise TypeError("Invalid input format")
 
     def __getitem__(self, index):
         return self.A[index]
