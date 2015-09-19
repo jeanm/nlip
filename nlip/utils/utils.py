@@ -96,3 +96,15 @@ def load_sparse_vecs(filename, sep=None):
                     rows.append(current)
                     data.append(float(line[1]))
     return (rows,cols,data), words
+
+def bisect_right(a, x, lo=0, hi=None):
+    if lo < 0:
+        raise ValueError('lo must be non-negative')
+    if hi is None:
+        hi = len(a)
+    while lo < hi:
+        mid = (lo+hi)//2
+        if x > a[mid]: hi = mid
+        else: lo = mid+1
+    return lo
+
