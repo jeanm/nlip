@@ -2,7 +2,7 @@ import re
 from collections import defaultdict
 
 # PTB tags to universal tagset mapping, renamed as follows for compactness:
-# ADJ	J
+# ADJ	A
 # ADP	I
 # ADV	R
 # CONJ	C
@@ -15,7 +15,7 @@ from collections import defaultdict
 # X	X
 # .	.
 # based on github.com/slavpetrov/universal-pos-tags/blob/master/en-ptb.map
-_newtags = defaultdict(lambda: "X", [("!", "."), ("#", "."), ("$", "."), ("``", "."), ("''", "."), ("(", "."), (")", "."), (",", "."), ("-LRB-", "."), ("-RRB-", "."), (".", "."), (":", "."), ("?", "."), ("CC", "C"), ("CD", "#"), ("DT", "D"), ("EX", "D"), ("IN", "I"), ("IN|RP", "I"), ("JJ", "J"), ("JJR", "J"), ("JJRJR", "J"), ("JJS", "J"), ("JJ|RB", "J"), ("JJ|VBG", "J"), ("MD", "V"), ("NN", "N"), ("NNP", "N"), ("NNPS", "N"), ("NNS", "N"), ("NN|NNS", "N"), ("NN|SYM", "N"), ("NN|VBG", "N"), ("NP", "N"), ("PDT", "D"), ("POS", "T"), ("PRP", "P"), ("PRP$", "P"), ("PRP|VBP", "P"), ("T", "T"), ("RB", "R"), ("RBR", "R"), ("RBS", "R"), ("RB|RP", "R"), ("RB|VBG", "R"), ("RP", "T"), ("TO", "T"), ("VB", "V"), ("VBD", "V"), ("VBD|VBN", "V"), ("VBG", "V"), ("VBG|NN", "V"), ("VBN", "V"), ("VBP", "V"), ("VBP|TO", "V"), ("VBZ", "V"), ("VP", "V"), ("WDT", "D"), ("WP", "P"), ("WP$", "P"), ("WRB", "R")])
+_newtags = defaultdict(lambda: "X", [("!", "."), ("#", "."), ("$", "."), ("``", "."), ("''", "."), ("(", "."), (")", "."), (",", "."), ("-LRB-", "."), ("-RRB-", "."), (".", "."), (":", "."), ("?", "."), ("CC", "C"), ("CD", "#"), ("DT", "D"), ("EX", "D"), ("IN", "I"), ("IN|RP", "I"), ("JJ", "A"), ("JJR", "A"), ("JJRJR", "A"), ("JJS", "A"), ("JJ|RB", "A"), ("JJ|VBG", "A"), ("MD", "V"), ("NN", "N"), ("NNP", "N"), ("NNPS", "N"), ("NNS", "N"), ("NN|NNS", "N"), ("NN|SYM", "N"), ("NN|VBG", "N"), ("NP", "N"), ("PDT", "D"), ("POS", "T"), ("PRP", "P"), ("PRP$", "P"), ("PRP|VBP", "P"), ("T", "T"), ("RB", "R"), ("RBR", "R"), ("RBS", "R"), ("RB|RP", "R"), ("RB|VBG", "R"), ("RP", "T"), ("TO", "T"), ("VB", "V"), ("VBD", "V"), ("VBD|VBN", "V"), ("VBG", "V"), ("VBG|NN", "V"), ("VBN", "V"), ("VBP", "V"), ("VBP|TO", "V"), ("VBZ", "V"), ("VP", "V"), ("WDT", "D"), ("WP", "P"), ("WP$", "P"), ("WRB", "R")])
 
 # discard words that do not match this pattern
 _pattern = re.compile("^[\w][\w'-]*$")
