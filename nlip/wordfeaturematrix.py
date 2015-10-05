@@ -2,7 +2,7 @@ import numpy as np
 import h5py
 from scipy.sparse import coo_matrix, issparse
 from sklearn.neighbors import NearestNeighbors
-from nlip.utils import smart_open
+from nlip.utils import smart_open, bisect_right
 from nlip import floatX
 
 class WordFeatureMatrix():
@@ -120,32 +120,6 @@ class WordFeatureMatrix():
             f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
             f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.uint32))
 
-    def scale(self, weights, what="words"):
-        """
-        Scales rows or columns of the IJV sparse matrix.
-
-        If scaling rows, the scaled matrix will be such that::
-
-            V[i] = I[i] * weights[i]
-
-        with ``J`` instead of ``I`` if scaling columns
-
-        Parameters
-        ----------
-        weights : array_like
-            list of weights assigned to each index
-        what : str
-            ``words`` (default) or ``features``
-
-        """
-        weights = np.asarray(weights)
-        if what is "words":
-            self.A.data = np.multiply(self.A.data,weights[self.A.row])
-        elif what is "features":
-            self.A.data = np.multiply(self.A.data,weights[self.A.col])
-        else:
-            raise ValueError("'what' must be either 'words' or 'features'")
-
     def ppmi(self, cds=1):
         """
         Applies Positive Pointwise Mutual Information to the matrix
@@ -157,13 +131,30 @@ class WordFeatureMatrix():
             Default is 1, i.e. no context distribution smoothing.
 
         """
-        data = self.A.data
+        data = np.asarray(self.A.data, dtype=np.uint32)
         row = self.A.row
         col = self.A.col
         rowsums = np.bincount(row, weights=data, minlength=len(self.index2name))
-        print(np.sum(rowsums))
-        colsums = np.power(np.bincount(col, weights=data, minlength=len(self.index2name)), cds)
-        print(np.sum(colsums))
-        total = np.power(np.sum(data), cds)
-        print(total)
+        colsums = np.bincount(col, weights=np.power(data,cds), minlength=len(self.index2name))
+        total = np.sum(np.power(data,cds))
         self.A.data = np.maximum(np.log(total*data/(rowsums[row]*colsums[col])),0)
+
+    def subsample(self, threshold=1e-3):
+        """
+        Applies downsampling with a given threshold
+
+        Arguments
+        ---------
+        threshold : float
+            The subsampling corpus frequency threshold
+
+        """
+        total = np.sum(self.index2count)
+        count_threshold = threshold * total
+        factors = np.minimum(1,1 - np.sqrt(np.divide(count_threshold,self.index2count)))
+
+        total_f = np.sum(self.index2count_f)
+        count_threshold_f = threshold * total_f
+        factors_f = np.minimum(1,1 - np.sqrt(np.divide(count_threshold_f,self.index2count_f)))
+
+        self.A.data *= factors[self.A.row]*factors_f[self.A.col]
