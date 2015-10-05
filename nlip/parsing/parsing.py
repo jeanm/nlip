@@ -21,13 +21,53 @@ _newtags = defaultdict(lambda: "X", [("!", "."), ("#", "."), ("$", "."), ("``", 
 _pattern = re.compile("^[\w][\w'-]*$")
 
 def cleanup_w(x):
-    return x if _pattern.search(x) else None
+    return x.lower().replace("-","") if _pattern.search(x) else None
 
 def cleanup_w_t(x):
-    return x[0]+'|'+_newtags[x[1]] if _pattern.search(x[0]) else None
+    return x[0].lower().replace("-","")+'|'+_newtags[x[1]] if _pattern.search(x[0]) else None
 
 def filter_ws(words):
     return [w for w in map(cleanup_w,words) if w]
 
 def filter_ws_ts(words, tags):
     return [x for x in map(cleanup_w_t, zip(words,tags)) if x]
+
+def find_an(tags, grs):
+    """Return the position of all adjective and nouns that are part of ANs"""
+    anlist = []
+    for gr in grs:
+        if gr[0] == "amod" and gr[1] != 0:
+            # decrement indices since in the gr list 0 represents ROOT and
+            # everything else is incremented accordingly
+            anlist.append((gr[2]-1,gr[1]-2))
+    return anlist
+
+def find_det(tags, grs):
+    """Return the position of all determiners and nouns that are part of NPs"""
+    detlist = []
+    for gr in grs:
+        if gr[0] == "amod" and gr[1] != 0:
+            # decrement indices since in the gr list 0 represents ROOT and
+            # everything else is incremented accordingly
+            detlist.append((gr[2]-1,gr[1]-2))
+    return detlist
+
+def get_window(index, length, k=2):
+    """Return a list of tuples (pos, dist_from_centre) for index's window"""
+    start_win = max(0, index - k)
+    end_win = min(length - 1, index + k)
+    return sorted(((pos,abs(index-pos)) for pos in range(start_win, end_win+1)
+            if pos != index), key=lambda x: x[1])
+
+def get_phrase_window(indices, length, k=2):
+    window = [k+1] * length  # maps position in sentence to smallest distance from index word
+    indices = set(indices)  # used to make sure I don't include indices in the window
+    for index in indices:
+        for pos, distance in get_window(index, length, k):
+            if distance < window[pos]:  # only update distance if lower than what we already found
+                window[pos] = distance
+    # positions are sorted by smallest distance from any index word, and
+    # do not include index words themselves
+    return sorted((tuple(element) for element in enumerate(window)
+            if element[1] <= k and element[0] not in indices),
+            key=lambda x: x[1])
