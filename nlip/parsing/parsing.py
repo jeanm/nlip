@@ -36,20 +36,21 @@ def find_an(tags, grs):
     """Return the position of all adjective and nouns that are part of ANs"""
     anlist = []
     for gr in grs:
-        if gr[0] == "amod" and gr[1] != 0:
+        if gr[0] == "amod" and gr[1] != 0 and gr[2] != 0:
             # decrement indices since in the gr list 0 represents ROOT and
             # everything else is incremented accordingly
-            anlist.append((gr[2]-1,gr[1]-2))
+
+            anlist.append((gr[2]-1,gr[1]-1))
     return anlist
 
 def find_det(tags, grs):
     """Return the position of all determiners and nouns that are part of NPs"""
     detlist = []
     for gr in grs:
-        if gr[0] == "amod" and gr[1] != 0:
+        if gr[0] == "det" and gr[1] != 0 and gr[2] != 0:
             # decrement indices since in the gr list 0 represents ROOT and
             # everything else is incremented accordingly
-            detlist.append((gr[2]-1,gr[1]-2))
+            detlist.append((gr[2]-1,gr[1]-1))
     return detlist
 
 def get_window(index, length, k=2):
