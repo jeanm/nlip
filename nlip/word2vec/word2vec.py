@@ -150,7 +150,7 @@ class Word2Vec():
                     si(total_words / t.toc())))
         cor = self.test_dev(embeddings)
         logger.info("correlation on development set %.5f (p %.2e)" % cor)
-        return Embeddings((embeddings, self.index2name, self.index2count))
+        return Embeddings(embeddings, self.index2name, self.index2count)
 
     def train_tuples(self, corpus_infile, compound_vocab_infile,
             epochs=1, report_freq=20):
@@ -203,11 +203,11 @@ class Word2Vec():
         logger.info("trained on %s words (%s examples) in %s @ %s words/s" %
                 (si(total_words), si(total_sentences), t.toc(hms=True),
                     si(total_words / t.toc())))
-        return Embeddings((embeddings, index2name_comp, index2count_comp))
+        return Embeddings(embeddings, index2name_comp, index2count_comp)
 
     # save/load context vectors
     def get_contexts(self):
-        return Embeddings((self.contexts, self.index2name, self.index2count))
+        return Embeddings(self.contexts, self.index2name, self.index2count)
     def load_contexts(self, contexts):
         shape = contexts.A.shape
         if shape[0] != len(contexts.index2name) or shape[1] != self.dim:
