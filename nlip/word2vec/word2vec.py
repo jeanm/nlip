@@ -152,7 +152,7 @@ class Word2Vec():
         logger.info("correlation on development set %.5f (p %.2e)" % cor)
         return Embeddings(embeddings, self.index2name, self.index2count)
 
-    def train_tuples(self, corpus_infile, compound_vocab_infile,
+    def train_tuples(self, corpus_infile, counts_infile, phrase_str,
             epochs=1, report_freq=20):
         if len(self.index2sample) == 0:
             logger.error("attempted to start training but vocabulary has not been loaded")
@@ -162,12 +162,10 @@ class Word2Vec():
         index2count_comp = []
         # count the number of compound vectors to be learned
         vocabsize = 0
-        with smart_open(compound_vocab_infile, 'r') as fvoc:
-            for line_num,line in enumerate(fvoc):
-                tokens = line.strip().split()
-                index2name_comp.append(tokens[0])
-                index2count_comp.append(tokens[1])
-                vocabsize += 1
+        with h5py.File(counts_infile, "r") as fcount:
+            index2count_comp = fcount[phrase_str+"index2count"][:]
+            index2indices_comp = fcount[phrase_str+"index2indices"][:]
+            vocabsize = len(index2count_comp)
 
         # initialise temporary work memory and compound vectors
         work = np.zeros(self.dim, dtype=floatX)
@@ -203,7 +201,8 @@ class Word2Vec():
         logger.info("trained on %s words (%s examples) in %s @ %s words/s" %
                 (si(total_words), si(total_sentences), t.toc(hms=True),
                     si(total_words / t.toc())))
-        return Embeddings(embeddings, index2name_comp, index2count_comp)
+        # TODO index2indices is not of the right dtype ...
+        return Embeddings(embeddings, index2indices_comp, index2count_comp)
 
     # save/load context vectors
     def get_contexts(self):
@@ -216,3 +215,5 @@ class Word2Vec():
         self.contexts = contexts.A
         self.index2name = contexts.index2name
         self.index2count = contexts.index2count
+        self.name2index = {e:i for i,e in enumerate(self.index2name)}
+        self._finalise_vocab()
