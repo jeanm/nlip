@@ -72,8 +72,11 @@ class Embeddings():
         self.f.close()
 
     def save(self, h5_outfile):
-        dt = h5py.special_dtype(vlen=str)
         with h5py.File(h5_outfile, 'w') as f:
             f.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
-            f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
-            f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.uint32))
+            f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))
+            if isinstance(self.index2name[0], str):
+                dt = h5py.special_dtype(vlen=str)
+                f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
+            else:
+                f.create_dataset("index2name", data=np.array(self.index2name,dtype=np.int32))

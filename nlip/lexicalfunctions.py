@@ -77,4 +77,4 @@ class LexicalFunctions():
         with h5py.File(h5_outfile, 'w') as f:
             f.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
             f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
-            f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.uint32))
+            f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))

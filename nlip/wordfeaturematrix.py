@@ -113,12 +113,12 @@ class WordFeatureMatrix():
         dt = h5py.special_dtype(vlen=str)
         coo = self.A.tocoo()
         with h5py.File(h5_outfile, "w") as f:
-            f.create_dataset("I", data=np.asarray(coo.row,dtype=np.uint32))
-            f.create_dataset("J", data=np.asarray(coo.col,dtype=np.uint32))
+            f.create_dataset("I", data=np.asarray(coo.row,dtype=np.int32))
+            f.create_dataset("J", data=np.asarray(coo.col,dtype=np.int32))
             f.create_dataset("V", data=np.asarray(coo.data,dtype=floatX))
-            f.create_dataset("shape", data=np.asarray(self.shape,dtype=np.uint32))
+            f.create_dataset("shape", data=np.asarray(self.shape,dtype=np.int32))
             f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
-            f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.uint32))
+            f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))
 
     def ppmi(self, cds=1):
         """
@@ -131,7 +131,7 @@ class WordFeatureMatrix():
             Default is 1, i.e. no context distribution smoothing.
 
         """
-        data = np.asarray(self.A.data, dtype=np.uint32)
+        data = np.asarray(self.A.data, dtype=np.int32)
         row = self.A.row
         col = self.A.col
         rowsums = np.bincount(row, weights=data, minlength=len(self.index2name))
