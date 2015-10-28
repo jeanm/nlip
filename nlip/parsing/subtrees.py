@@ -18,9 +18,11 @@ def find_phrases(tags, grs):
         if gr[1] == 0 or gr[2] == 0:
             continue
         if gr[0] == "det":
-            phrases.dn.append((dep,head))
+            if tags[head].startswith("NN") and tags[dep] == "DT":
+                phrases.dn.append((dep,head))
         if gr[0] == "amod":
-            phrases.an.append((dep,head))
+            if tags[head].startswith("NN") and tags[dep].startswith("JJ"):
+                phrases.an.append((dep,head))
         if gr[0] == "nsubj":
             if tags[head].startswith("VB"):
                 if tags[dep].startswith("NN"):
@@ -31,7 +33,7 @@ def find_phrases(tags, grs):
             if tags[head].startswith("VB"):
                 if tags[dep].startswith("NN"):
                     vdict[head][1].append(dep)
-                elif tags[dep] in rel_pron:
+                elif tags[dep] in rel_pron:  # WDT, WP
                     v2orp[head].append(dep)
         if gr[0] == "acl:relcl":
             if tags[head].startswith("NN") and tags[dep].startswith("VB"):
