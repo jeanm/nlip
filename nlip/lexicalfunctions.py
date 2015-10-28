@@ -36,7 +36,7 @@ class LexicalFunctions():
 
     """
 
-    def __init__(self, arg1=None):
+    def __init__(self, arg1=None, arg2=None, arg3=None):
         self.index2name = []
         self.name2index = {}
         self.index2count = []

@@ -46,7 +46,10 @@ class Embeddings():
             self.A = self.f["A"][:]
             self.shape = self.A.shape
             self.index2name = self.f["index2name"][:]
-            self.name2index = {e:i for i,e in enumerate(self.index2name)}
+            if isinstance(self.index2name[0], (list, np.ndarray)):
+                self.name2index = {tuple(e):i for i,e in enumerate(self.index2name)}
+            else:
+                self.name2index = {e:i for i,e in enumerate(self.index2name)}
             if "index2count" in self.f:
                 self.index2count = self.f["index2count"][:]
         elif isinstance(arg1, np.ndarray):
@@ -54,7 +57,10 @@ class Embeddings():
             self.shape = self.A.shape
             if isinstance(arg2, (list, np.ndarray)):
                 self.index2name = arg2
-                self.name2index = {e:i for i,e in enumerate(self.index2name)}
+                if isinstance(self.index2name[0], (list, np.ndarray)):
+                    self.name2index = {tuple(e):i for i,e in enumerate(self.index2name)}
+                else:
+                    self.name2index = {e:i for i,e in enumerate(self.index2name)}
             if isinstance(arg3, (list, np.ndarray)):
                 self.index2count = arg3
                 if len(self.index2name) != len(self.index2count):
@@ -75,8 +81,5 @@ class Embeddings():
         with h5py.File(h5_outfile, 'w') as f:
             f.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
             f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))
-            if isinstance(self.index2name[0], str):
-                dt = h5py.special_dtype(vlen=str)
-                f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
-            else:
-                f.create_dataset("index2name", data=np.array(self.index2name,dtype=np.int32))
+            dt = h5py.special_dtype(vlen=str)
+            f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
