@@ -23,7 +23,7 @@ class Embeddings():
     Attributes
     ----------
     A : array_like
-        Array with one embeddings per row
+        Array with one embedding per row
     shape : 2-tuple
         ``(n_words, dimensionality)``
     index2name : array_like
@@ -52,7 +52,7 @@ class Embeddings():
                 self.name2index = {e:i for i,e in enumerate(self.index2name)}
             if "index2count" in self.f:
                 self.index2count = self.f["index2count"][:]
-        elif isinstance(arg1, np.ndarray):
+        elif isinstance(arg1, (np.ndarray, list)):
             self.A = np.asarray(arg1, dtype=floatX)
             self.shape = self.A.shape
             if isinstance(arg2, (list, np.ndarray)):
@@ -79,7 +79,8 @@ class Embeddings():
 
     def save(self, h5_outfile):
         with h5py.File(h5_outfile, 'w') as f:
-            f.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
+            if len(A) > 0:
+                f.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
             f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))
             dt = h5py.special_dtype(vlen=str)
             f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
