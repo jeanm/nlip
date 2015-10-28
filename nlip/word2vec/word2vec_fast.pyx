@@ -96,7 +96,8 @@ cdef unsigned long long fast_sentence_sg_neg(
     unsigned long long next_random) nogil:
 
     cdef long long a
-    cdef long long row1 = word2_index * size, row2
+    cdef long long row1 = <long long>word2_index * size
+    cdef long long row2
     cdef unsigned long long modulo = 281474976710655ULL
     cdef floatX_t f, g, label
     cdef np.uint32_t target_index
@@ -115,7 +116,7 @@ cdef unsigned long long fast_sentence_sg_neg(
                 continue
             label = <floatX_t>0.0
 
-        row2 = target_index * size
+        row2 = <long long>target_index * size
         f = our_dot(&size, &syn0[row1], &ONE, &syn1[row2], &ONE)
         if f <= -MAX_EXP or f >= MAX_EXP:
             continue
@@ -200,8 +201,8 @@ def train_tuple(model, example, alpha, _syn0, _work):
 
     cdef np.uint32_t compound = example[0]
     cdef np.uint32_t indices[MAX_2WINDOW_LEN]
-    cdef np.uint32_t reduced_window = np.random.randint(0,len(example)-1)
-    cdef int sentence_len, i
+    cdef np.uint32_t reduced_window
+    cdef int i
 
     # for negative sampling
     cdef np.uint32_t *ns_table
@@ -226,8 +227,10 @@ def train_tuple(model, example, alpha, _syn0, _work):
         i += 1
         if i == MAX_2WINDOW_LEN:
             break
-    sentence_len = i
+    if i < 1:
+        return
 
+    reduced_window = np.random.randint(0, i)
     # release GIL & train on the sentence
     with nogil:
         for i in range(reduced_window):

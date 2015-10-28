@@ -7,6 +7,7 @@ from scipy.spatial.distance import cosine
 from .word2vec_fast import train_sentence, train_tuple
 from nlip import Embeddings
 from nlip.utils import si, smart_open, Timer
+import h5py
 
 floatX = np.float32
 
@@ -44,7 +45,7 @@ class Word2Vec():
             # set parameter as proportion of total
             threshold_count = self.sample * retain_total
 
-        self.index2sample_id = []
+        self.index2sample = []
         downsample_total, downsample_unique = 0, 0
         for w in range(len(self.index2name)):
             v = self.index2count[w]
@@ -158,19 +159,17 @@ class Word2Vec():
             logger.error("attempted to start training but vocabulary has not been loaded")
             raise RuntimeError("You must build/load the vocabulary before training the model")
         epochs = int(epochs) or 1
-        index2name_comp = []
-        index2count_comp = []
-        # count the number of compound vectors to be learned
+        # count the number of phrase vectors to be learned
         vocabsize = 0
         with h5py.File(counts_infile, "r") as fcount:
-            index2count_comp = fcount[phrase_str+"index2count"][:]
-            index2indices_comp = fcount[phrase_str+"index2indices"][:]
-            vocabsize = len(index2count_comp)
+            phrase_index2count = fcount[phrase_str+"_index2count"][:]
+            phrase_index2name = fcount[phrase_str+"_index2name"][:]
+            vocabsize = len(phrase_index2count)
 
-        # initialise temporary work memory and compound vectors
+        # initialise temporary work memory and phrase vectors
         work = np.zeros(self.dim, dtype=floatX)
         embeddings = np.ascontiguousarray((np.random.rand(vocabsize, self.dim) - 0.5) / self.dim,dtype=floatX)
-        logger.info("initialised a %s x %s compound matrix", si(vocabsize), si(self.dim))
+        logger.info("initialised a %s x %s phrase embedding matrix", si(vocabsize), si(self.dim))
 
         with smart_open(corpus_infile, 'r') as fin:
             total_words = 0
@@ -186,9 +185,9 @@ class Word2Vec():
                 fin.seek(0)
                 next(fin) # skip first line with number of sentences
                 for sentence_num, line in enumerate(fin,start=epoch*corpus_sentences):
+                    sentence = list(map(int,line.strip().split()))[:self.window+1]
                     if len(sentence) <= 1: continue
                     alpha = self.alpha * (1 - sentence_num / total_sentences)
-                    sentence = list(map(int,line.strip().split()))
                     word_count += len(sentence)-1
                     train_tuple(self, sentence, alpha, embeddings, work)
                     if t.ready():
@@ -201,8 +200,7 @@ class Word2Vec():
         logger.info("trained on %s words (%s examples) in %s @ %s words/s" %
                 (si(total_words), si(total_sentences), t.toc(hms=True),
                     si(total_words / t.toc())))
-        # TODO index2indices is not of the right dtype ...
-        return Embeddings(embeddings, index2indices_comp, index2count_comp)
+        return Embeddings(embeddings, phrase_index2name, phrase_index2count)
 
     # save/load context vectors
     def get_contexts(self):

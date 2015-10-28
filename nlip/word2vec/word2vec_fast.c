@@ -1754,22 +1754,22 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
   /* "nlip/word2vec/word2vec_fast.pyx":99
  * 
  *     cdef long long a
- *     cdef long long row1 = word2_index * size, row2             # <<<<<<<<<<<<<<
+ *     cdef long long row1 = <long long>word2_index * size             # <<<<<<<<<<<<<<
+ *     cdef long long row2
  *     cdef unsigned long long modulo = 281474976710655ULL
- *     cdef floatX_t f, g, label
  */
-  __pyx_v_row1 = (__pyx_v_word2_index * __pyx_v_size);
+  __pyx_v_row1 = (((PY_LONG_LONG)__pyx_v_word2_index) * __pyx_v_size);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":100
- *     cdef long long a
- *     cdef long long row1 = word2_index * size, row2
+  /* "nlip/word2vec/word2vec_fast.pyx":101
+ *     cdef long long row1 = <long long>word2_index * size
+ *     cdef long long row2
  *     cdef unsigned long long modulo = 281474976710655ULL             # <<<<<<<<<<<<<<
  *     cdef floatX_t f, g, label
  *     cdef np.uint32_t target_index
  */
   __pyx_v_modulo = 281474976710655ULL;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":105
+  /* "nlip/word2vec/word2vec_fast.pyx":106
  *     cdef int d
  * 
  *     memset(work, 0, size * cython.sizeof(floatX_t))             # <<<<<<<<<<<<<<
@@ -1778,7 +1778,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
   memset(__pyx_v_work, 0, (__pyx_v_size * (sizeof(__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t))));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":107
+  /* "nlip/word2vec/word2vec_fast.pyx":108
  *     memset(work, 0, size * cython.sizeof(floatX_t))
  * 
  *     for d in range(negative+1):             # <<<<<<<<<<<<<<
@@ -1789,7 +1789,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
   for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_1; __pyx_t_2+=1) {
     __pyx_v_d = __pyx_t_2;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":108
+    /* "nlip/word2vec/word2vec_fast.pyx":109
  * 
  *     for d in range(negative+1):
  *         if d == 0:             # <<<<<<<<<<<<<<
@@ -1799,7 +1799,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
     __pyx_t_3 = ((__pyx_v_d == 0) != 0);
     if (__pyx_t_3) {
 
-      /* "nlip/word2vec/word2vec_fast.pyx":109
+      /* "nlip/word2vec/word2vec_fast.pyx":110
  *     for d in range(negative+1):
  *         if d == 0:
  *             target_index = word_index             # <<<<<<<<<<<<<<
@@ -1808,7 +1808,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
       __pyx_v_target_index = __pyx_v_word_index;
 
-      /* "nlip/word2vec/word2vec_fast.pyx":110
+      /* "nlip/word2vec/word2vec_fast.pyx":111
  *         if d == 0:
  *             target_index = word_index
  *             label = ONEF             # <<<<<<<<<<<<<<
@@ -1820,7 +1820,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
     }
     /*else*/ {
 
-      /* "nlip/word2vec/word2vec_fast.pyx":112
+      /* "nlip/word2vec/word2vec_fast.pyx":113
  *             label = ONEF
  *         else:
  *             target_index = bisect_left(ns_table, (next_random >> 16) % ns_table[ns_table_len-1], 0, ns_table_len)             # <<<<<<<<<<<<<<
@@ -1829,7 +1829,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
       __pyx_v_target_index = __pyx_f_4nlip_8word2vec_13word2vec_fast_bisect_left(__pyx_v_ns_table, ((__pyx_v_next_random >> 16) % (__pyx_v_ns_table[(__pyx_v_ns_table_len - 1)])), 0, __pyx_v_ns_table_len);
 
-      /* "nlip/word2vec/word2vec_fast.pyx":113
+      /* "nlip/word2vec/word2vec_fast.pyx":114
  *         else:
  *             target_index = bisect_left(ns_table, (next_random >> 16) % ns_table[ns_table_len-1], 0, ns_table_len)
  *             next_random = (next_random * <unsigned long long>25214903917ULL + 11) & modulo             # <<<<<<<<<<<<<<
@@ -1838,7 +1838,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
       __pyx_v_next_random = (((__pyx_v_next_random * ((unsigned PY_LONG_LONG)25214903917ULL)) + 11) & __pyx_v_modulo);
 
-      /* "nlip/word2vec/word2vec_fast.pyx":114
+      /* "nlip/word2vec/word2vec_fast.pyx":115
  *             target_index = bisect_left(ns_table, (next_random >> 16) % ns_table[ns_table_len-1], 0, ns_table_len)
  *             next_random = (next_random * <unsigned long long>25214903917ULL + 11) & modulo
  *             if target_index == word_index:             # <<<<<<<<<<<<<<
@@ -1848,7 +1848,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
       __pyx_t_3 = ((__pyx_v_target_index == __pyx_v_word_index) != 0);
       if (__pyx_t_3) {
 
-        /* "nlip/word2vec/word2vec_fast.pyx":115
+        /* "nlip/word2vec/word2vec_fast.pyx":116
  *             next_random = (next_random * <unsigned long long>25214903917ULL + 11) & modulo
  *             if target_index == word_index:
  *                 continue             # <<<<<<<<<<<<<<
@@ -1858,37 +1858,37 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
         goto __pyx_L3_continue;
       }
 
-      /* "nlip/word2vec/word2vec_fast.pyx":116
+      /* "nlip/word2vec/word2vec_fast.pyx":117
  *             if target_index == word_index:
  *                 continue
  *             label = <floatX_t>0.0             # <<<<<<<<<<<<<<
  * 
- *         row2 = target_index * size
+ *         row2 = <long long>target_index * size
  */
       __pyx_v_label = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t)0.0);
     }
     __pyx_L5:;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":118
+    /* "nlip/word2vec/word2vec_fast.pyx":119
  *             label = <floatX_t>0.0
  * 
- *         row2 = target_index * size             # <<<<<<<<<<<<<<
+ *         row2 = <long long>target_index * size             # <<<<<<<<<<<<<<
  *         f = our_dot(&size, &syn0[row1], &ONE, &syn1[row2], &ONE)
  *         if f <= -MAX_EXP or f >= MAX_EXP:
  */
-    __pyx_v_row2 = (__pyx_v_target_index * __pyx_v_size);
+    __pyx_v_row2 = (((PY_LONG_LONG)__pyx_v_target_index) * __pyx_v_size);
 
-    /* "nlip/word2vec/word2vec_fast.pyx":119
+    /* "nlip/word2vec/word2vec_fast.pyx":120
  * 
- *         row2 = target_index * size
+ *         row2 = <long long>target_index * size
  *         f = our_dot(&size, &syn0[row1], &ONE, &syn1[row2], &ONE)             # <<<<<<<<<<<<<<
  *         if f <= -MAX_EXP or f >= MAX_EXP:
  *             continue
  */
     __pyx_v_f = __pyx_v_4nlip_8word2vec_13word2vec_fast_our_dot((&__pyx_v_size), (&(__pyx_v_syn0[__pyx_v_row1])), (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE), (&(__pyx_v_syn1[__pyx_v_row2])), (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE));
 
-    /* "nlip/word2vec/word2vec_fast.pyx":120
- *         row2 = target_index * size
+    /* "nlip/word2vec/word2vec_fast.pyx":121
+ *         row2 = <long long>target_index * size
  *         f = our_dot(&size, &syn0[row1], &ONE, &syn1[row2], &ONE)
  *         if f <= -MAX_EXP or f >= MAX_EXP:             # <<<<<<<<<<<<<<
  *             continue
@@ -1905,7 +1905,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
     __pyx_L8_bool_binop_done:;
     if (__pyx_t_3) {
 
-      /* "nlip/word2vec/word2vec_fast.pyx":121
+      /* "nlip/word2vec/word2vec_fast.pyx":122
  *         f = our_dot(&size, &syn0[row1], &ONE, &syn1[row2], &ONE)
  *         if f <= -MAX_EXP or f >= MAX_EXP:
  *             continue             # <<<<<<<<<<<<<<
@@ -1915,7 +1915,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
       goto __pyx_L3_continue;
     }
 
-    /* "nlip/word2vec/word2vec_fast.pyx":122
+    /* "nlip/word2vec/word2vec_fast.pyx":123
  *         if f <= -MAX_EXP or f >= MAX_EXP:
  *             continue
  *         f = EXP_TABLE[<int>((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]             # <<<<<<<<<<<<<<
@@ -1924,7 +1924,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
     __pyx_v_f = (__pyx_v_4nlip_8word2vec_13word2vec_fast_EXP_TABLE[((int)((__pyx_v_f + 6.0) * 83.0))]);
 
-    /* "nlip/word2vec/word2vec_fast.pyx":123
+    /* "nlip/word2vec/word2vec_fast.pyx":124
  *             continue
  *         f = EXP_TABLE[<int>((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]
  *         g = (label - f) * alpha             # <<<<<<<<<<<<<<
@@ -1933,7 +1933,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
     __pyx_v_g = ((__pyx_v_label - __pyx_v_f) * __pyx_v_alpha);
 
-    /* "nlip/word2vec/word2vec_fast.pyx":124
+    /* "nlip/word2vec/word2vec_fast.pyx":125
  *         f = EXP_TABLE[<int>((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]
  *         g = (label - f) * alpha
  *         our_saxpy(&size, &g, &syn1[row2], &ONE, work, &ONE)             # <<<<<<<<<<<<<<
@@ -1942,7 +1942,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
     __pyx_v_4nlip_8word2vec_13word2vec_fast_our_saxpy((&__pyx_v_size), (&__pyx_v_g), (&(__pyx_v_syn1[__pyx_v_row2])), (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE), __pyx_v_work, (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE));
 
-    /* "nlip/word2vec/word2vec_fast.pyx":125
+    /* "nlip/word2vec/word2vec_fast.pyx":126
  *         g = (label - f) * alpha
  *         our_saxpy(&size, &g, &syn1[row2], &ONE, work, &ONE)
  *         our_saxpy(&size, &g, &syn0[row1], &ONE, &syn1[row2], &ONE)             # <<<<<<<<<<<<<<
@@ -1953,7 +1953,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
     __pyx_L3_continue:;
   }
 
-  /* "nlip/word2vec/word2vec_fast.pyx":127
+  /* "nlip/word2vec/word2vec_fast.pyx":128
  *         our_saxpy(&size, &g, &syn0[row1], &ONE, &syn1[row2], &ONE)
  * 
  *     our_saxpy(&size, &ONEF, work, &ONE, &syn0[row1], &ONE)             # <<<<<<<<<<<<<<
@@ -1962,7 +1962,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
  */
   __pyx_v_4nlip_8word2vec_13word2vec_fast_our_saxpy((&__pyx_v_size), (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONEF), __pyx_v_work, (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE), (&(__pyx_v_syn0[__pyx_v_row1])), (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":129
+  /* "nlip/word2vec/word2vec_fast.pyx":130
  *     our_saxpy(&size, &ONEF, work, &ONE, &syn0[row1], &ONE)
  * 
  *     return next_random             # <<<<<<<<<<<<<<
@@ -1985,7 +1985,7 @@ static unsigned PY_LONG_LONG __pyx_f_4nlip_8word2vec_13word2vec_fast_fast_senten
   return __pyx_r;
 }
 
-/* "nlip/word2vec/word2vec_fast.pyx":131
+/* "nlip/word2vec/word2vec_fast.pyx":132
  *     return next_random
  * 
  * def train_sentence(model, sentence, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
@@ -2031,26 +2031,26 @@ static PyObject *__pyx_pw_4nlip_8word2vec_13word2vec_fast_1train_sentence(PyObje
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_sentence)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_syn0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_work)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "train_sentence") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "train_sentence") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -2069,7 +2069,7 @@ static PyObject *__pyx_pw_4nlip_8word2vec_13word2vec_fast_1train_sentence(PyObje
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("train_sentence", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("nlip.word2vec.word2vec_fast.train_sentence", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2128,94 +2128,94 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("train_sentence", 0);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":132
+  /* "nlip/word2vec/word2vec_fast.pyx":133
  * 
  * def train_sentence(model, sentence, alpha, _syn0, _work):
  *     cdef int negative = model.negative             # <<<<<<<<<<<<<<
  *     cdef int sample = (model.sample != 0)
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_negative); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_negative); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_negative = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":133
+  /* "nlip/word2vec/word2vec_fast.pyx":134
  * def train_sentence(model, sentence, alpha, _syn0, _work):
  *     cdef int negative = model.negative
  *     cdef int sample = (model.sample != 0)             # <<<<<<<<<<<<<<
  * 
  *     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_int_0, Py_NE); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_int_0, Py_NE); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 133; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 134; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_sample = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":135
+  /* "nlip/word2vec/word2vec_fast.pyx":136
  *     cdef int sample = (model.sample != 0)
  * 
  *     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))             # <<<<<<<<<<<<<<
  *     cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))
  *     cdef floatX_t *work
  */
-  if (!(likely(((__pyx_v__syn0) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__syn0, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 135; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_v__syn0) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__syn0, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_syn0 = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t *)PyArray_DATA(((PyArrayObject *)__pyx_v__syn0)));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":136
+  /* "nlip/word2vec/word2vec_fast.pyx":137
  * 
  *     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))
  *     cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))             # <<<<<<<<<<<<<<
  *     cdef floatX_t *work
  *     cdef floatX_t _alpha = alpha
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_contexts); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_contexts); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 136; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 137; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_syn1 = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t *)PyArray_DATA(((PyArrayObject *)__pyx_t_3)));
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":138
+  /* "nlip/word2vec/word2vec_fast.pyx":139
  *     cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))
  *     cdef floatX_t *work
  *     cdef floatX_t _alpha = alpha             # <<<<<<<<<<<<<<
  *     cdef int size = model.dim
  * 
  */
-  __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_alpha); if (unlikely((__pyx_t_4 == (npy_float32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 138; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_alpha); if (unlikely((__pyx_t_4 == (npy_float32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v__alpha = __pyx_t_4;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":139
+  /* "nlip/word2vec/word2vec_fast.pyx":140
  *     cdef floatX_t *work
  *     cdef floatX_t _alpha = alpha
  *     cdef int size = model.dim             # <<<<<<<<<<<<<<
  * 
  *     cdef np.uint32_t indices[MAX_SENTENCE_LEN]
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_dim); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_dim); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 139; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 140; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_size = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":144
+  /* "nlip/word2vec/word2vec_fast.pyx":145
  *     cdef np.uint32_t reduced_windows[MAX_SENTENCE_LEN]
  *     cdef int sentence_len
  *     cdef int window = model.window             # <<<<<<<<<<<<<<
  * 
  *     cdef int i, j, k
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_window); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_window); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 144; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 145; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_window = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":147
+  /* "nlip/word2vec/word2vec_fast.pyx":148
  * 
  *     cdef int i, j, k
  *     cdef long result = 0             # <<<<<<<<<<<<<<
@@ -2224,95 +2224,95 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
  */
   __pyx_v_result = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":152
+  /* "nlip/word2vec/word2vec_fast.pyx":153
  *     cdef np.uint32_t *ns_table
  *     cdef unsigned long long ns_table_len
  *     ns_table = <np.uint32_t *>(np.PyArray_DATA(model.ns_table))             # <<<<<<<<<<<<<<
  *     ns_table_len = len(model.ns_table)
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 152; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_ns_table = ((__pyx_t_5numpy_uint32_t *)PyArray_DATA(((PyArrayObject *)__pyx_t_3)));
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":153
+  /* "nlip/word2vec/word2vec_fast.pyx":154
  *     cdef unsigned long long ns_table_len
  *     ns_table = <np.uint32_t *>(np.PyArray_DATA(model.ns_table))
  *     ns_table_len = len(model.ns_table)             # <<<<<<<<<<<<<<
  * 
  *     # for sampling (negative and frequent-word downsampling)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_5 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 153; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_5 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 154; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_ns_table_len = __pyx_t_5;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":157
+  /* "nlip/word2vec/word2vec_fast.pyx":158
  *     # for sampling (negative and frequent-word downsampling)
  *     cdef unsigned long long next_random
  *     next_random = (2**24) * np.random.randint(0, 2**24) + np.random.randint(0, 2**24)             # <<<<<<<<<<<<<<
  * 
  *     # convert Python structures to primitive types, so we can release the GIL
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_random); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_random); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_randint); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_randint); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Multiply(__pyx_int_16777216, __pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyNumber_Multiply(__pyx_int_16777216, __pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_random); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_random); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_randint); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_randint); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_7 = __Pyx_PyInt_As_unsigned_PY_LONG_LONG(__pyx_t_1); if (unlikely((__pyx_t_7 == (unsigned PY_LONG_LONG)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __Pyx_PyInt_As_unsigned_PY_LONG_LONG(__pyx_t_1); if (unlikely((__pyx_t_7 == (unsigned PY_LONG_LONG)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_next_random = __pyx_t_7;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":160
+  /* "nlip/word2vec/word2vec_fast.pyx":161
  * 
  *     # convert Python structures to primitive types, so we can release the GIL
  *     work = <floatX_t *>np.PyArray_DATA(_work)             # <<<<<<<<<<<<<<
  * 
  *     sample_int = model.index2sample
  */
-  if (!(likely(((__pyx_v__work) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__work, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 160; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_v__work) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__work, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_work = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t *)PyArray_DATA(((PyArrayObject *)__pyx_v__work)));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":162
+  /* "nlip/word2vec/word2vec_fast.pyx":163
  *     work = <floatX_t *>np.PyArray_DATA(_work)
  * 
  *     sample_int = model.index2sample             # <<<<<<<<<<<<<<
  *     i = 0
  *     for word in sentence:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_index2sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 162; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_index2sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 163; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sample_int = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":163
+  /* "nlip/word2vec/word2vec_fast.pyx":164
  * 
  *     sample_int = model.index2sample
  *     i = 0             # <<<<<<<<<<<<<<
@@ -2321,7 +2321,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
  */
   __pyx_v_i = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":164
+  /* "nlip/word2vec/word2vec_fast.pyx":165
  *     sample_int = model.index2sample
  *     i = 0
  *     for word in sentence:             # <<<<<<<<<<<<<<
@@ -2332,26 +2332,26 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
     __pyx_t_1 = __pyx_v_sentence; __Pyx_INCREF(__pyx_t_1); __pyx_t_5 = 0;
     __pyx_t_8 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_sentence); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_sentence); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   for (;;) {
     if (likely(!__pyx_t_8)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_5); __Pyx_INCREF(__pyx_t_6); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_5); __Pyx_INCREF(__pyx_t_6); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_1, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_1, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_5); __Pyx_INCREF(__pyx_t_6); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_5); __Pyx_INCREF(__pyx_t_6); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_1, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_1, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       }
@@ -2361,7 +2361,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 164; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -2370,7 +2370,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
     __Pyx_XDECREF_SET(__pyx_v_word, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":165
+    /* "nlip/word2vec/word2vec_fast.pyx":166
  *     i = 0
  *     for word in sentence:
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling             # <<<<<<<<<<<<<<
@@ -2383,20 +2383,20 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
       __pyx_t_9 = __pyx_t_10;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_6 = PyObject_GetItem(__pyx_v_sample_int, __pyx_v_word); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_6 = PyObject_GetItem(__pyx_v_sample_int, __pyx_v_word); if (unlikely(__pyx_t_6 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_3 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_f_4nlip_8word2vec_13word2vec_fast_random_int32((&__pyx_v_next_random))); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_f_4nlip_8word2vec_13word2vec_fast_random_int32((&__pyx_v_next_random))); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_11 = PyObject_RichCompare(__pyx_t_6, __pyx_t_3, Py_LT); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = PyObject_RichCompare(__pyx_t_6, __pyx_t_3, Py_LT); __Pyx_XGOTREF(__pyx_t_11); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_10 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 165; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_11); if (unlikely(__pyx_t_10 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 166; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     __pyx_t_9 = __pyx_t_10;
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_9) {
 
-      /* "nlip/word2vec/word2vec_fast.pyx":166
+      /* "nlip/word2vec/word2vec_fast.pyx":167
  *     for word in sentence:
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling
  *             continue             # <<<<<<<<<<<<<<
@@ -2406,17 +2406,17 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
       goto __pyx_L3_continue;
     }
 
-    /* "nlip/word2vec/word2vec_fast.pyx":167
+    /* "nlip/word2vec/word2vec_fast.pyx":168
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling
  *             continue
  *         indices[i] = word             # <<<<<<<<<<<<<<
  *         i += 1
  *         if i == MAX_SENTENCE_LEN:
  */
-    __pyx_t_12 = __Pyx_PyInt_As_npy_uint32(__pyx_v_word); if (unlikely((__pyx_t_12 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 167; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyInt_As_npy_uint32(__pyx_v_word); if (unlikely((__pyx_t_12 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 168; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     (__pyx_v_indices[__pyx_v_i]) = __pyx_t_12;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":168
+    /* "nlip/word2vec/word2vec_fast.pyx":169
  *             continue
  *         indices[i] = word
  *         i += 1             # <<<<<<<<<<<<<<
@@ -2425,7 +2425,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
  */
     __pyx_v_i = (__pyx_v_i + 1);
 
-    /* "nlip/word2vec/word2vec_fast.pyx":169
+    /* "nlip/word2vec/word2vec_fast.pyx":170
  *         indices[i] = word
  *         i += 1
  *         if i == MAX_SENTENCE_LEN:             # <<<<<<<<<<<<<<
@@ -2435,7 +2435,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
     __pyx_t_9 = ((__pyx_v_i == 10000) != 0);
     if (__pyx_t_9) {
 
-      /* "nlip/word2vec/word2vec_fast.pyx":170
+      /* "nlip/word2vec/word2vec_fast.pyx":171
  *         i += 1
  *         if i == MAX_SENTENCE_LEN:
  *             break             # <<<<<<<<<<<<<<
@@ -2445,7 +2445,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
       goto __pyx_L4_break;
     }
 
-    /* "nlip/word2vec/word2vec_fast.pyx":164
+    /* "nlip/word2vec/word2vec_fast.pyx":165
  *     sample_int = model.index2sample
  *     i = 0
  *     for word in sentence:             # <<<<<<<<<<<<<<
@@ -2457,7 +2457,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
   __pyx_L4_break:;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":171
+  /* "nlip/word2vec/word2vec_fast.pyx":172
  *         if i == MAX_SENTENCE_LEN:
  *             break
  *     sentence_len = i             # <<<<<<<<<<<<<<
@@ -2466,7 +2466,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
  */
   __pyx_v_sentence_len = __pyx_v_i;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":174
+  /* "nlip/word2vec/word2vec_fast.pyx":175
  * 
  *     # single randint() call avoids a big thread-sync slowdown
  *     for i, item in enumerate(np.random.randint(0, window, sentence_len)):             # <<<<<<<<<<<<<<
@@ -2474,17 +2474,17 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
  * 
  */
   __pyx_t_2 = 0;
-  __pyx_t_11 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_11 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_11);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_11, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_randint); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_randint); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_11);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_window); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_window); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_sentence_len); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_sentence_len); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_13 = NULL;
   __pyx_t_5 = 0;
@@ -2498,7 +2498,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
       __pyx_t_5 = 1;
     }
   }
-  __pyx_t_14 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_14 = PyTuple_New(3+__pyx_t_5); if (unlikely(!__pyx_t_14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_14);
   if (__pyx_t_13) {
     __Pyx_GIVEREF(__pyx_t_13); PyTuple_SET_ITEM(__pyx_t_14, 0, __pyx_t_13); __pyx_t_13 = NULL;
@@ -2512,7 +2512,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
   PyTuple_SET_ITEM(__pyx_t_14, 2+__pyx_t_5, __pyx_t_6);
   __pyx_t_3 = 0;
   __pyx_t_6 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_14, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_14, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -2520,9 +2520,9 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
     __pyx_t_11 = __pyx_t_1; __Pyx_INCREF(__pyx_t_11); __pyx_t_5 = 0;
     __pyx_t_8 = NULL;
   } else {
-    __pyx_t_5 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = -1; __pyx_t_11 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_11);
-    __pyx_t_8 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = Py_TYPE(__pyx_t_11)->tp_iternext; if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
@@ -2530,17 +2530,17 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
       if (likely(PyList_CheckExact(__pyx_t_11))) {
         if (__pyx_t_5 >= PyList_GET_SIZE(__pyx_t_11)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_11, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
         if (__pyx_t_5 >= PyTuple_GET_SIZE(__pyx_t_11)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_11, __pyx_t_5); __Pyx_INCREF(__pyx_t_1); __pyx_t_5++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_11, __pyx_t_5); __pyx_t_5++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
@@ -2550,7 +2550,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -2561,17 +2561,17 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
     __pyx_v_i = __pyx_t_2;
     __pyx_t_2 = (__pyx_t_2 + 1);
 
-    /* "nlip/word2vec/word2vec_fast.pyx":175
+    /* "nlip/word2vec/word2vec_fast.pyx":176
  *     # single randint() call avoids a big thread-sync slowdown
  *     for i, item in enumerate(np.random.randint(0, window, sentence_len)):
  *         reduced_windows[i] = item             # <<<<<<<<<<<<<<
  * 
  *     # release GIL & train on the sentence
  */
-    __pyx_t_12 = __Pyx_PyInt_As_npy_uint32(__pyx_v_item); if (unlikely((__pyx_t_12 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyInt_As_npy_uint32(__pyx_v_item); if (unlikely((__pyx_t_12 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 176; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     (__pyx_v_reduced_windows[__pyx_v_i]) = __pyx_t_12;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":174
+    /* "nlip/word2vec/word2vec_fast.pyx":175
  * 
  *     # single randint() call avoids a big thread-sync slowdown
  *     for i, item in enumerate(np.random.randint(0, window, sentence_len)):             # <<<<<<<<<<<<<<
@@ -2581,7 +2581,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
   }
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":178
+  /* "nlip/word2vec/word2vec_fast.pyx":179
  * 
  *     # release GIL & train on the sentence
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -2595,7 +2595,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
       #endif
       /*try:*/ {
 
-        /* "nlip/word2vec/word2vec_fast.pyx":179
+        /* "nlip/word2vec/word2vec_fast.pyx":180
  *     # release GIL & train on the sentence
  *     with nogil:
  *         for i in range(sentence_len):             # <<<<<<<<<<<<<<
@@ -2606,7 +2606,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
         for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_2; __pyx_t_15+=1) {
           __pyx_v_i = __pyx_t_15;
 
-          /* "nlip/word2vec/word2vec_fast.pyx":180
+          /* "nlip/word2vec/word2vec_fast.pyx":181
  *     with nogil:
  *         for i in range(sentence_len):
  *             j = i - window + reduced_windows[i]             # <<<<<<<<<<<<<<
@@ -2615,7 +2615,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
  */
           __pyx_v_j = ((__pyx_v_i - __pyx_v_window) + (__pyx_v_reduced_windows[__pyx_v_i]));
 
-          /* "nlip/word2vec/word2vec_fast.pyx":181
+          /* "nlip/word2vec/word2vec_fast.pyx":182
  *         for i in range(sentence_len):
  *             j = i - window + reduced_windows[i]
  *             if j < 0:             # <<<<<<<<<<<<<<
@@ -2625,7 +2625,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
           __pyx_t_9 = ((__pyx_v_j < 0) != 0);
           if (__pyx_t_9) {
 
-            /* "nlip/word2vec/word2vec_fast.pyx":182
+            /* "nlip/word2vec/word2vec_fast.pyx":183
  *             j = i - window + reduced_windows[i]
  *             if j < 0:
  *                 j = 0             # <<<<<<<<<<<<<<
@@ -2637,7 +2637,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
           }
           __pyx_L16:;
 
-          /* "nlip/word2vec/word2vec_fast.pyx":183
+          /* "nlip/word2vec/word2vec_fast.pyx":184
  *             if j < 0:
  *                 j = 0
  *             k = i + window + 1 - reduced_windows[i]             # <<<<<<<<<<<<<<
@@ -2646,7 +2646,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
  */
           __pyx_v_k = (((__pyx_v_i + __pyx_v_window) + 1) - (__pyx_v_reduced_windows[__pyx_v_i]));
 
-          /* "nlip/word2vec/word2vec_fast.pyx":184
+          /* "nlip/word2vec/word2vec_fast.pyx":185
  *                 j = 0
  *             k = i + window + 1 - reduced_windows[i]
  *             if k > sentence_len:             # <<<<<<<<<<<<<<
@@ -2656,7 +2656,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
           __pyx_t_9 = ((__pyx_v_k > __pyx_v_sentence_len) != 0);
           if (__pyx_t_9) {
 
-            /* "nlip/word2vec/word2vec_fast.pyx":185
+            /* "nlip/word2vec/word2vec_fast.pyx":186
  *             k = i + window + 1 - reduced_windows[i]
  *             if k > sentence_len:
  *                 k = sentence_len             # <<<<<<<<<<<<<<
@@ -2668,7 +2668,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
           }
           __pyx_L17:;
 
-          /* "nlip/word2vec/word2vec_fast.pyx":186
+          /* "nlip/word2vec/word2vec_fast.pyx":187
  *             if k > sentence_len:
  *                 k = sentence_len
  *             for j in range(j, k):             # <<<<<<<<<<<<<<
@@ -2679,7 +2679,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
           for (__pyx_t_17 = __pyx_v_j; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
             __pyx_v_j = __pyx_t_17;
 
-            /* "nlip/word2vec/word2vec_fast.pyx":187
+            /* "nlip/word2vec/word2vec_fast.pyx":188
  *                 k = sentence_len
  *             for j in range(j, k):
  *                 if j == i:             # <<<<<<<<<<<<<<
@@ -2689,7 +2689,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
             __pyx_t_9 = ((__pyx_v_j == __pyx_v_i) != 0);
             if (__pyx_t_9) {
 
-              /* "nlip/word2vec/word2vec_fast.pyx":188
+              /* "nlip/word2vec/word2vec_fast.pyx":189
  *             for j in range(j, k):
  *                 if j == i:
  *                     continue             # <<<<<<<<<<<<<<
@@ -2699,7 +2699,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
               goto __pyx_L18_continue;
             }
 
-            /* "nlip/word2vec/word2vec_fast.pyx":189
+            /* "nlip/word2vec/word2vec_fast.pyx":190
  *                 if j == i:
  *                     continue
  *                 next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], indices[j], _alpha, work, next_random)             # <<<<<<<<<<<<<<
@@ -2712,7 +2712,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
         }
       }
 
-      /* "nlip/word2vec/word2vec_fast.pyx":178
+      /* "nlip/word2vec/word2vec_fast.pyx":179
  * 
  *     # release GIL & train on the sentence
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -2730,7 +2730,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
       }
   }
 
-  /* "nlip/word2vec/word2vec_fast.pyx":131
+  /* "nlip/word2vec/word2vec_fast.pyx":132
  *     return next_random
  * 
  * def train_sentence(model, sentence, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
@@ -2759,7 +2759,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_train_sentence(CYTHON_
   return __pyx_r;
 }
 
-/* "nlip/word2vec/word2vec_fast.pyx":191
+/* "nlip/word2vec/word2vec_fast.pyx":192
  *                 next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], indices[j], _alpha, work, next_random)
  * 
  * def train_tuple(model, example, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
@@ -2805,26 +2805,26 @@ static PyObject *__pyx_pw_4nlip_8word2vec_13word2vec_fast_3train_tuple(PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_example)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_syn0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_work)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "train_tuple") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "train_tuple") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -2843,7 +2843,7 @@ static PyObject *__pyx_pw_4nlip_8word2vec_13word2vec_fast_3train_tuple(PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("train_tuple", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("nlip.word2vec.word2vec_fast.train_tuple", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2867,7 +2867,6 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
   __pyx_t_5numpy_uint32_t __pyx_v_compound;
   __pyx_t_5numpy_uint32_t __pyx_v_indices[20];
   __pyx_t_5numpy_uint32_t __pyx_v_reduced_window;
-  CYTHON_UNUSED int __pyx_v_sentence_len;
   int __pyx_v_i;
   __pyx_t_5numpy_uint32_t *__pyx_v_ns_table;
   unsigned PY_LONG_LONG __pyx_v_ns_table_len;
@@ -2881,244 +2880,195 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
   PyObject *__pyx_t_3 = NULL;
   __pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t __pyx_t_4;
   __pyx_t_5numpy_uint32_t __pyx_t_5;
-  PyObject *__pyx_t_6 = NULL;
-  Py_ssize_t __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
-  PyObject *__pyx_t_9 = NULL;
-  unsigned PY_LONG_LONG __pyx_t_10;
-  PyObject *(*__pyx_t_11)(PyObject *);
-  int __pyx_t_12;
-  int __pyx_t_13;
+  Py_ssize_t __pyx_t_6;
+  PyObject *__pyx_t_7 = NULL;
+  unsigned PY_LONG_LONG __pyx_t_8;
+  PyObject *(*__pyx_t_9)(PyObject *);
+  int __pyx_t_10;
+  int __pyx_t_11;
+  PyObject *__pyx_t_12 = NULL;
+  PyObject *__pyx_t_13 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("train_tuple", 0);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":192
+  /* "nlip/word2vec/word2vec_fast.pyx":193
  * 
  * def train_tuple(model, example, alpha, _syn0, _work):
  *     cdef int negative = model.negative             # <<<<<<<<<<<<<<
  *     cdef int sample = (model.sample != 0)
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_negative); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_negative); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_negative = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":193
+  /* "nlip/word2vec/word2vec_fast.pyx":194
  * def train_tuple(model, example, alpha, _syn0, _work):
  *     cdef int negative = model.negative
  *     cdef int sample = (model.sample != 0)             # <<<<<<<<<<<<<<
  * 
  *     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_int_0, Py_NE); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_int_0, Py_NE); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_sample = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":195
+  /* "nlip/word2vec/word2vec_fast.pyx":196
  *     cdef int sample = (model.sample != 0)
  * 
  *     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))             # <<<<<<<<<<<<<<
  *     cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))
  *     cdef floatX_t *work
  */
-  if (!(likely(((__pyx_v__syn0) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__syn0, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_v__syn0) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__syn0, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_syn0 = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t *)PyArray_DATA(((PyArrayObject *)__pyx_v__syn0)));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":196
+  /* "nlip/word2vec/word2vec_fast.pyx":197
  * 
  *     cdef floatX_t *syn0 = <floatX_t *>(np.PyArray_DATA(_syn0))
  *     cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))             # <<<<<<<<<<<<<<
  *     cdef floatX_t *work
  *     cdef floatX_t _alpha = alpha
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_contexts); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_contexts); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_syn1 = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t *)PyArray_DATA(((PyArrayObject *)__pyx_t_3)));
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":198
+  /* "nlip/word2vec/word2vec_fast.pyx":199
  *     cdef floatX_t *syn1 = <floatX_t *>(np.PyArray_DATA(model.contexts))
  *     cdef floatX_t *work
  *     cdef floatX_t _alpha = alpha             # <<<<<<<<<<<<<<
  *     cdef int size = model.dim
  * 
  */
-  __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_alpha); if (unlikely((__pyx_t_4 == (npy_float32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 198; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __pyx_PyFloat_AsFloat(__pyx_v_alpha); if (unlikely((__pyx_t_4 == (npy_float32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v__alpha = __pyx_t_4;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":199
+  /* "nlip/word2vec/word2vec_fast.pyx":200
  *     cdef floatX_t *work
  *     cdef floatX_t _alpha = alpha
  *     cdef int size = model.dim             # <<<<<<<<<<<<<<
  * 
  *     cdef np.uint32_t compound = example[0]
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_dim); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_dim); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 200; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_3); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 200; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_size = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":201
+  /* "nlip/word2vec/word2vec_fast.pyx":202
  *     cdef int size = model.dim
  * 
  *     cdef np.uint32_t compound = example[0]             # <<<<<<<<<<<<<<
  *     cdef np.uint32_t indices[MAX_2WINDOW_LEN]
- *     cdef np.uint32_t reduced_window = np.random.randint(0,len(example)-1)
+ *     cdef np.uint32_t reduced_window
  */
-  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_example, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_3 = __Pyx_GetItemInt(__pyx_v_example, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 0); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyInt_As_npy_uint32(__pyx_t_3); if (unlikely((__pyx_t_5 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = __Pyx_PyInt_As_npy_uint32(__pyx_t_3); if (unlikely((__pyx_t_5 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_compound = __pyx_t_5;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":203
- *     cdef np.uint32_t compound = example[0]
- *     cdef np.uint32_t indices[MAX_2WINDOW_LEN]
- *     cdef np.uint32_t reduced_window = np.random.randint(0,len(example)-1)             # <<<<<<<<<<<<<<
- *     cdef int sentence_len, i
- * 
- */
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_random); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_randint); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_7 = PyObject_Length(__pyx_v_example); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_6 = PyInt_FromSsize_t((__pyx_t_7 - 1)); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_8 = NULL;
-  __pyx_t_7 = 0;
-  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_1))) {
-    __pyx_t_8 = PyMethod_GET_SELF(__pyx_t_1);
-    if (likely(__pyx_t_8)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
-      __Pyx_INCREF(__pyx_t_8);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_1, function);
-      __pyx_t_7 = 1;
-    }
-  }
-  __pyx_t_9 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_9);
-  if (__pyx_t_8) {
-    __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_8); __pyx_t_8 = NULL;
-  }
-  __Pyx_INCREF(__pyx_int_0);
-  __Pyx_GIVEREF(__pyx_int_0);
-  PyTuple_SET_ITEM(__pyx_t_9, 0+__pyx_t_7, __pyx_int_0);
-  __Pyx_GIVEREF(__pyx_t_6);
-  PyTuple_SET_ITEM(__pyx_t_9, 1+__pyx_t_7, __pyx_t_6);
-  __pyx_t_6 = 0;
-  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_9, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_5 = __Pyx_PyInt_As_npy_uint32(__pyx_t_3); if (unlikely((__pyx_t_5 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_reduced_window = __pyx_t_5;
-
-  /* "nlip/word2vec/word2vec_fast.pyx":209
+  /* "nlip/word2vec/word2vec_fast.pyx":210
  *     cdef np.uint32_t *ns_table
  *     cdef unsigned long long ns_table_len
  *     ns_table = <np.uint32_t *>(np.PyArray_DATA(model.ns_table))             # <<<<<<<<<<<<<<
  *     ns_table_len = len(model.ns_table)
  * 
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_t_3) == Py_None) || likely(__Pyx_TypeTest(__pyx_t_3, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_ns_table = ((__pyx_t_5numpy_uint32_t *)PyArray_DATA(((PyArrayObject *)__pyx_t_3)));
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":210
+  /* "nlip/word2vec/word2vec_fast.pyx":211
  *     cdef unsigned long long ns_table_len
  *     ns_table = <np.uint32_t *>(np.PyArray_DATA(model.ns_table))
  *     ns_table_len = len(model.ns_table)             # <<<<<<<<<<<<<<
  * 
  *     # for sampling (negative and frequent-word downsampling)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_ns_table); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_7 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyObject_Length(__pyx_t_3); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_ns_table_len = __pyx_t_7;
+  __pyx_v_ns_table_len = __pyx_t_6;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":214
+  /* "nlip/word2vec/word2vec_fast.pyx":215
  *     # for sampling (negative and frequent-word downsampling)
  *     cdef unsigned long long next_random
  *     next_random = (2**24) * np.random.randint(0, 2**24) + np.random.randint(0, 2**24)             # <<<<<<<<<<<<<<
  * 
  *     # convert Python structures to primitive types, so we can release the GIL
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_random); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_random); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_randint); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_randint); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Multiply(__pyx_int_16777216, __pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyNumber_Multiply(__pyx_int_16777216, __pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_random); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_random); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_randint); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_randint); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_9); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_7); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_10 = __Pyx_PyInt_As_unsigned_PY_LONG_LONG(__pyx_t_1); if (unlikely((__pyx_t_10 == (unsigned PY_LONG_LONG)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_8 = __Pyx_PyInt_As_unsigned_PY_LONG_LONG(__pyx_t_1); if (unlikely((__pyx_t_8 == (unsigned PY_LONG_LONG)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_next_random = __pyx_t_10;
+  __pyx_v_next_random = __pyx_t_8;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":217
+  /* "nlip/word2vec/word2vec_fast.pyx":218
  * 
  *     # convert Python structures to primitive types, so we can release the GIL
  *     work = <floatX_t *>np.PyArray_DATA(_work)             # <<<<<<<<<<<<<<
  * 
  *     # build reduced window and downsample
  */
-  if (!(likely(((__pyx_v__work) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__work, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 217; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (!(likely(((__pyx_v__work) == Py_None) || likely(__Pyx_TypeTest(__pyx_v__work, __pyx_ptype_5numpy_ndarray))))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_v_work = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t *)PyArray_DATA(((PyArrayObject *)__pyx_v__work)));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":220
+  /* "nlip/word2vec/word2vec_fast.pyx":221
  * 
  *     # build reduced window and downsample
  *     sample_int = model.index2sample             # <<<<<<<<<<<<<<
  *     i = 0
  *     for word in example[1:]:
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_index2sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 220; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_model, __pyx_n_s_index2sample); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_sample_int = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":221
+  /* "nlip/word2vec/word2vec_fast.pyx":222
  *     # build reduced window and downsample
  *     sample_int = model.index2sample
  *     i = 0             # <<<<<<<<<<<<<<
@@ -3127,50 +3077,50 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
  */
   __pyx_v_i = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":222
+  /* "nlip/word2vec/word2vec_fast.pyx":223
  *     sample_int = model.index2sample
  *     i = 0
  *     for word in example[1:]:             # <<<<<<<<<<<<<<
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling
  *             continue
  */
-  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_v_example, 1, 0, NULL, NULL, &__pyx_slice__5, 1, 0, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetSlice(__pyx_v_example, 1, 0, NULL, NULL, &__pyx_slice__5, 1, 0, 0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
-    __pyx_t_9 = __pyx_t_1; __Pyx_INCREF(__pyx_t_9); __pyx_t_7 = 0;
-    __pyx_t_11 = NULL;
+    __pyx_t_7 = __pyx_t_1; __Pyx_INCREF(__pyx_t_7); __pyx_t_6 = 0;
+    __pyx_t_9 = NULL;
   } else {
-    __pyx_t_7 = -1; __pyx_t_9 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_11 = Py_TYPE(__pyx_t_9)->tp_iternext; if (unlikely(!__pyx_t_11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_9 = Py_TYPE(__pyx_t_7)->tp_iternext; if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   for (;;) {
-    if (likely(!__pyx_t_11)) {
-      if (likely(PyList_CheckExact(__pyx_t_9))) {
-        if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_9)) break;
+    if (likely(!__pyx_t_9)) {
+      if (likely(PyList_CheckExact(__pyx_t_7))) {
+        if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_7)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_9, __pyx_t_7); __Pyx_INCREF(__pyx_t_1); __pyx_t_7++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_7, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       } else {
-        if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_9)) break;
+        if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_7)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_9, __pyx_t_7); __Pyx_INCREF(__pyx_t_1); __pyx_t_7++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_1 = PySequence_ITEM(__pyx_t_9, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_1 = PySequence_ITEM(__pyx_t_7, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_GOTREF(__pyx_t_1);
         #endif
       }
     } else {
-      __pyx_t_1 = __pyx_t_11(__pyx_t_9);
+      __pyx_t_1 = __pyx_t_9(__pyx_t_7);
       if (unlikely(!__pyx_t_1)) {
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -3179,33 +3129,33 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
     __Pyx_XDECREF_SET(__pyx_v_word, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":223
+    /* "nlip/word2vec/word2vec_fast.pyx":224
  *     i = 0
  *     for word in example[1:]:
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling             # <<<<<<<<<<<<<<
  *             continue
  *         indices[i] = word
  */
-    __pyx_t_13 = (__pyx_v_sample != 0);
-    if (__pyx_t_13) {
+    __pyx_t_11 = (__pyx_v_sample != 0);
+    if (__pyx_t_11) {
     } else {
-      __pyx_t_12 = __pyx_t_13;
+      __pyx_t_10 = __pyx_t_11;
       goto __pyx_L6_bool_binop_done;
     }
-    __pyx_t_1 = PyObject_GetItem(__pyx_v_sample_int, __pyx_v_word); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_1 = PyObject_GetItem(__pyx_v_sample_int, __pyx_v_word); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_f_4nlip_8word2vec_13word2vec_fast_random_int32((&__pyx_v_next_random))); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_f_4nlip_8word2vec_13word2vec_fast_random_int32((&__pyx_v_next_random))); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = PyObject_RichCompare(__pyx_t_1, __pyx_t_3, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = PyObject_RichCompare(__pyx_t_1, __pyx_t_3, Py_LT); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_12 = __pyx_t_13;
+    __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+    __pyx_t_10 = __pyx_t_11;
     __pyx_L6_bool_binop_done:;
-    if (__pyx_t_12) {
+    if (__pyx_t_10) {
 
-      /* "nlip/word2vec/word2vec_fast.pyx":224
+      /* "nlip/word2vec/word2vec_fast.pyx":225
  *     for word in example[1:]:
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling
  *             continue             # <<<<<<<<<<<<<<
@@ -3215,17 +3165,17 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
       goto __pyx_L3_continue;
     }
 
-    /* "nlip/word2vec/word2vec_fast.pyx":225
+    /* "nlip/word2vec/word2vec_fast.pyx":226
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling
  *             continue
  *         indices[i] = word             # <<<<<<<<<<<<<<
  *         i += 1
  *         if i == MAX_2WINDOW_LEN:
  */
-    __pyx_t_5 = __Pyx_PyInt_As_npy_uint32(__pyx_v_word); if (unlikely((__pyx_t_5 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyInt_As_npy_uint32(__pyx_v_word); if (unlikely((__pyx_t_5 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     (__pyx_v_indices[__pyx_v_i]) = __pyx_t_5;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":226
+    /* "nlip/word2vec/word2vec_fast.pyx":227
  *             continue
  *         indices[i] = word
  *         i += 1             # <<<<<<<<<<<<<<
@@ -3234,27 +3184,27 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
  */
     __pyx_v_i = (__pyx_v_i + 1);
 
-    /* "nlip/word2vec/word2vec_fast.pyx":227
+    /* "nlip/word2vec/word2vec_fast.pyx":228
  *         indices[i] = word
  *         i += 1
  *         if i == MAX_2WINDOW_LEN:             # <<<<<<<<<<<<<<
  *             break
- *     sentence_len = i
+ *     if i < 1:
  */
-    __pyx_t_12 = ((__pyx_v_i == 20) != 0);
-    if (__pyx_t_12) {
+    __pyx_t_10 = ((__pyx_v_i == 20) != 0);
+    if (__pyx_t_10) {
 
-      /* "nlip/word2vec/word2vec_fast.pyx":228
+      /* "nlip/word2vec/word2vec_fast.pyx":229
  *         i += 1
  *         if i == MAX_2WINDOW_LEN:
  *             break             # <<<<<<<<<<<<<<
- *     sentence_len = i
- * 
+ *     if i < 1:
+ *         return
  */
       goto __pyx_L4_break;
     }
 
-    /* "nlip/word2vec/word2vec_fast.pyx":222
+    /* "nlip/word2vec/word2vec_fast.pyx":223
  *     sample_int = model.index2sample
  *     i = 0
  *     for word in example[1:]:             # <<<<<<<<<<<<<<
@@ -3264,19 +3214,80 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
     __pyx_L3_continue:;
   }
   __pyx_L4_break:;
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":229
+  /* "nlip/word2vec/word2vec_fast.pyx":230
  *         if i == MAX_2WINDOW_LEN:
  *             break
- *     sentence_len = i             # <<<<<<<<<<<<<<
+ *     if i < 1:             # <<<<<<<<<<<<<<
+ *         return
  * 
- *     # release GIL & train on the sentence
  */
-  __pyx_v_sentence_len = __pyx_v_i;
+  __pyx_t_10 = ((__pyx_v_i < 1) != 0);
+  if (__pyx_t_10) {
 
-  /* "nlip/word2vec/word2vec_fast.pyx":232
+    /* "nlip/word2vec/word2vec_fast.pyx":231
+ *             break
+ *     if i < 1:
+ *         return             # <<<<<<<<<<<<<<
  * 
+ *     reduced_window = np.random.randint(0, i)
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+  }
+
+  /* "nlip/word2vec/word2vec_fast.pyx":233
+ *         return
+ * 
+ *     reduced_window = np.random.randint(0, i)             # <<<<<<<<<<<<<<
+ *     # release GIL & train on the sentence
+ *     with nogil:
+ */
+  __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_12);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_random); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_randint); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_12);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_1 = NULL;
+  __pyx_t_6 = 0;
+  if (CYTHON_COMPILING_IN_CPYTHON && likely(PyMethod_Check(__pyx_t_12))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_12);
+    if (likely(__pyx_t_1)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_12);
+      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_12, function);
+      __pyx_t_6 = 1;
+    }
+  }
+  __pyx_t_13 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_13);
+  if (__pyx_t_1) {
+    __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_13, 0, __pyx_t_1); __pyx_t_1 = NULL;
+  }
+  __Pyx_INCREF(__pyx_int_0);
+  __Pyx_GIVEREF(__pyx_int_0);
+  PyTuple_SET_ITEM(__pyx_t_13, 0+__pyx_t_6, __pyx_int_0);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_13, 1+__pyx_t_6, __pyx_t_3);
+  __pyx_t_3 = 0;
+  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_13, NULL); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_13); __pyx_t_13 = 0;
+  __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
+  __pyx_t_5 = __Pyx_PyInt_As_npy_uint32(__pyx_t_7); if (unlikely((__pyx_t_5 == (npy_uint32)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_v_reduced_window = __pyx_t_5;
+
+  /* "nlip/word2vec/word2vec_fast.pyx":235
+ *     reduced_window = np.random.randint(0, i)
  *     # release GIL & train on the sentence
  *     with nogil:             # <<<<<<<<<<<<<<
  *         for i in range(reduced_window):
@@ -3289,7 +3300,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
       #endif
       /*try:*/ {
 
-        /* "nlip/word2vec/word2vec_fast.pyx":233
+        /* "nlip/word2vec/word2vec_fast.pyx":236
  *     # release GIL & train on the sentence
  *     with nogil:
  *         for i in range(reduced_window):             # <<<<<<<<<<<<<<
@@ -3300,7 +3311,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
         for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_5; __pyx_t_2+=1) {
           __pyx_v_i = __pyx_t_2;
 
-          /* "nlip/word2vec/word2vec_fast.pyx":234
+          /* "nlip/word2vec/word2vec_fast.pyx":237
  *     with nogil:
  *         for i in range(reduced_window):
  *             next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], compound, _alpha, work, next_random)             # <<<<<<<<<<<<<<
@@ -3311,8 +3322,8 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
         }
       }
 
-      /* "nlip/word2vec/word2vec_fast.pyx":232
- * 
+      /* "nlip/word2vec/word2vec_fast.pyx":235
+ *     reduced_window = np.random.randint(0, i)
  *     # release GIL & train on the sentence
  *     with nogil:             # <<<<<<<<<<<<<<
  *         for i in range(reduced_window):
@@ -3323,13 +3334,13 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
           #ifdef WITH_THREAD
           Py_BLOCK_THREADS
           #endif
-          goto __pyx_L11;
+          goto __pyx_L12;
         }
-        __pyx_L11:;
+        __pyx_L12:;
       }
   }
 
-  /* "nlip/word2vec/word2vec_fast.pyx":191
+  /* "nlip/word2vec/word2vec_fast.pyx":192
  *                 next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], indices[j], _alpha, work, next_random)
  * 
  * def train_tuple(model, example, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
@@ -3343,9 +3354,9 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_12);
+  __Pyx_XDECREF(__pyx_t_13);
   __Pyx_AddTraceback("nlip.word2vec.word2vec_fast.train_tuple", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -3356,7 +3367,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_2train_tuple(CYTHON_UN
   return __pyx_r;
 }
 
-/* "nlip/word2vec/word2vec_fast.pyx":236
+/* "nlip/word2vec/word2vec_fast.pyx":239
  *             next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], compound, _alpha, work, next_random)
  * 
  * def init():             # <<<<<<<<<<<<<<
@@ -3395,7 +3406,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("init", 0);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":246
+  /* "nlip/word2vec/word2vec_fast.pyx":249
  * 
  *     cdef int i
  *     cdef float *x = [<float>10.0]             # <<<<<<<<<<<<<<
@@ -3405,7 +3416,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
   __pyx_t_1[0] = ((float)10.0);
   __pyx_v_x = __pyx_t_1;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":247
+  /* "nlip/word2vec/word2vec_fast.pyx":250
  *     cdef int i
  *     cdef float *x = [<float>10.0]
  *     cdef float *y = [<float>0.01]             # <<<<<<<<<<<<<<
@@ -3415,7 +3426,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
   __pyx_t_2[0] = ((float)0.01);
   __pyx_v_y = __pyx_t_2;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":248
+  /* "nlip/word2vec/word2vec_fast.pyx":251
  *     cdef float *x = [<float>10.0]
  *     cdef float *y = [<float>0.01]
  *     cdef float expected = <float>0.1             # <<<<<<<<<<<<<<
@@ -3424,7 +3435,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
   __pyx_v_expected = ((float)0.1);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":249
+  /* "nlip/word2vec/word2vec_fast.pyx":252
  *     cdef float *y = [<float>0.01]
  *     cdef float expected = <float>0.1
  *     cdef int size = 1             # <<<<<<<<<<<<<<
@@ -3433,7 +3444,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
   __pyx_v_size = 1;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":254
+  /* "nlip/word2vec/word2vec_fast.pyx":257
  * 
  *     # build the sigmoid table
  *     for i in range(EXP_TABLE_SIZE):             # <<<<<<<<<<<<<<
@@ -3443,7 +3454,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
   for (__pyx_t_3 = 0; __pyx_t_3 < 1000; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":255
+    /* "nlip/word2vec/word2vec_fast.pyx":258
  *     # build the sigmoid table
  *     for i in range(EXP_TABLE_SIZE):
  *         EXP_TABLE[i] = <floatX_t>exp((i / <floatX_t>EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)             # <<<<<<<<<<<<<<
@@ -3452,7 +3463,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     (__pyx_v_4nlip_8word2vec_13word2vec_fast_EXP_TABLE[__pyx_v_i]) = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t)exp(((((__pyx_v_i / ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t)1000)) * 2.0) - 1.0) * 6.0)));
 
-    /* "nlip/word2vec/word2vec_fast.pyx":256
+    /* "nlip/word2vec/word2vec_fast.pyx":259
  *     for i in range(EXP_TABLE_SIZE):
  *         EXP_TABLE[i] = <floatX_t>exp((i / <floatX_t>EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)
  *         EXP_TABLE[i] = <floatX_t>(EXP_TABLE[i] / (EXP_TABLE[i] + 1))             # <<<<<<<<<<<<<<
@@ -3461,7 +3472,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     (__pyx_v_4nlip_8word2vec_13word2vec_fast_EXP_TABLE[__pyx_v_i]) = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t)((__pyx_v_4nlip_8word2vec_13word2vec_fast_EXP_TABLE[__pyx_v_i]) / ((__pyx_v_4nlip_8word2vec_13word2vec_fast_EXP_TABLE[__pyx_v_i]) + 1.0)));
 
-    /* "nlip/word2vec/word2vec_fast.pyx":257
+    /* "nlip/word2vec/word2vec_fast.pyx":260
  *         EXP_TABLE[i] = <floatX_t>exp((i / <floatX_t>EXP_TABLE_SIZE * 2 - 1) * MAX_EXP)
  *         EXP_TABLE[i] = <floatX_t>(EXP_TABLE[i] / (EXP_TABLE[i] + 1))
  *         LOG_TABLE[i] = <floatX_t>log( EXP_TABLE[i] )             # <<<<<<<<<<<<<<
@@ -3471,7 +3482,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
     (__pyx_v_4nlip_8word2vec_13word2vec_fast_LOG_TABLE[__pyx_v_i]) = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t)log((__pyx_v_4nlip_8word2vec_13word2vec_fast_EXP_TABLE[__pyx_v_i])));
   }
 
-  /* "nlip/word2vec/word2vec_fast.pyx":260
+  /* "nlip/word2vec/word2vec_fast.pyx":263
  * 
  *     # check whether sdot returns double or float
  *     d_res = dsdot(&size, x, &ONE, y, &ONE)             # <<<<<<<<<<<<<<
@@ -3480,7 +3491,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
   __pyx_v_d_res = __pyx_v_4nlip_8word2vec_13word2vec_fast_dsdot((&__pyx_v_size), __pyx_v_x, (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE), __pyx_v_y, (&__pyx_v_4nlip_8word2vec_13word2vec_fast_ONE));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":261
+  /* "nlip/word2vec/word2vec_fast.pyx":264
  *     # check whether sdot returns double or float
  *     d_res = dsdot(&size, x, &ONE, y, &ONE)
  *     p_res = <float *>&d_res             # <<<<<<<<<<<<<<
@@ -3489,7 +3500,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
   __pyx_v_p_res = ((float *)(&__pyx_v_d_res));
 
-  /* "nlip/word2vec/word2vec_fast.pyx":262
+  /* "nlip/word2vec/word2vec_fast.pyx":265
  *     d_res = dsdot(&size, x, &ONE, y, &ONE)
  *     p_res = <float *>&d_res
  *     if (abs(d_res - expected) < 0.0001):             # <<<<<<<<<<<<<<
@@ -3499,7 +3510,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
   __pyx_t_4 = ((fabs((__pyx_v_d_res - __pyx_v_expected)) < 0.0001) != 0);
   if (__pyx_t_4) {
 
-    /* "nlip/word2vec/word2vec_fast.pyx":263
+    /* "nlip/word2vec/word2vec_fast.pyx":266
  *     p_res = <float *>&d_res
  *     if (abs(d_res - expected) < 0.0001):
  *         our_dot = our_dot_double             # <<<<<<<<<<<<<<
@@ -3508,7 +3519,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     __pyx_v_4nlip_8word2vec_13word2vec_fast_our_dot = __pyx_f_4nlip_8word2vec_13word2vec_fast_our_dot_double;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":264
+    /* "nlip/word2vec/word2vec_fast.pyx":267
  *     if (abs(d_res - expected) < 0.0001):
  *         our_dot = our_dot_double
  *         our_saxpy = saxpy             # <<<<<<<<<<<<<<
@@ -3517,7 +3528,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     __pyx_v_4nlip_8word2vec_13word2vec_fast_our_saxpy = __pyx_v_4nlip_8word2vec_13word2vec_fast_saxpy;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":265
+    /* "nlip/word2vec/word2vec_fast.pyx":268
  *         our_dot = our_dot_double
  *         our_saxpy = saxpy
  *         return 0  # double             # <<<<<<<<<<<<<<
@@ -3530,7 +3541,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
     goto __pyx_L0;
   }
 
-  /* "nlip/word2vec/word2vec_fast.pyx":266
+  /* "nlip/word2vec/word2vec_fast.pyx":269
  *         our_saxpy = saxpy
  *         return 0  # double
  *     elif (abs(p_res[0] - expected) < 0.0001):             # <<<<<<<<<<<<<<
@@ -3540,7 +3551,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
   __pyx_t_4 = ((fabsf(((__pyx_v_p_res[0]) - __pyx_v_expected)) < 0.0001) != 0);
   if (__pyx_t_4) {
 
-    /* "nlip/word2vec/word2vec_fast.pyx":267
+    /* "nlip/word2vec/word2vec_fast.pyx":270
  *         return 0  # double
  *     elif (abs(p_res[0] - expected) < 0.0001):
  *         our_dot = our_dot_float             # <<<<<<<<<<<<<<
@@ -3549,7 +3560,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     __pyx_v_4nlip_8word2vec_13word2vec_fast_our_dot = __pyx_f_4nlip_8word2vec_13word2vec_fast_our_dot_float;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":268
+    /* "nlip/word2vec/word2vec_fast.pyx":271
  *     elif (abs(p_res[0] - expected) < 0.0001):
  *         our_dot = our_dot_float
  *         our_saxpy = saxpy             # <<<<<<<<<<<<<<
@@ -3558,7 +3569,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     __pyx_v_4nlip_8word2vec_13word2vec_fast_our_saxpy = __pyx_v_4nlip_8word2vec_13word2vec_fast_saxpy;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":269
+    /* "nlip/word2vec/word2vec_fast.pyx":272
  *         our_dot = our_dot_float
  *         our_saxpy = saxpy
  *         return 1  # float             # <<<<<<<<<<<<<<
@@ -3572,7 +3583,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
   }
   /*else*/ {
 
-    /* "nlip/word2vec/word2vec_fast.pyx":273
+    /* "nlip/word2vec/word2vec_fast.pyx":276
  *         # neither => use cython loops, no BLAS
  *         # actually, the BLAS is so messed up we'll probably have segfaulted above and never even reach here
  *         our_dot = our_dot_noblas             # <<<<<<<<<<<<<<
@@ -3581,7 +3592,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     __pyx_v_4nlip_8word2vec_13word2vec_fast_our_dot = __pyx_f_4nlip_8word2vec_13word2vec_fast_our_dot_noblas;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":274
+    /* "nlip/word2vec/word2vec_fast.pyx":277
  *         # actually, the BLAS is so messed up we'll probably have segfaulted above and never even reach here
  *         our_dot = our_dot_noblas
  *         our_saxpy = our_saxpy_noblas             # <<<<<<<<<<<<<<
@@ -3590,7 +3601,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
  */
     __pyx_v_4nlip_8word2vec_13word2vec_fast_our_saxpy = __pyx_f_4nlip_8word2vec_13word2vec_fast_our_saxpy_noblas;
 
-    /* "nlip/word2vec/word2vec_fast.pyx":275
+    /* "nlip/word2vec/word2vec_fast.pyx":278
  *         our_dot = our_dot_noblas
  *         our_saxpy = our_saxpy_noblas
  *         return 2             # <<<<<<<<<<<<<<
@@ -3603,7 +3614,7 @@ static PyObject *__pyx_pf_4nlip_8word2vec_13word2vec_fast_4init(CYTHON_UNUSED Py
     goto __pyx_L0;
   }
 
-  /* "nlip/word2vec/word2vec_fast.pyx":236
+  /* "nlip/word2vec/word2vec_fast.pyx":239
  *             next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], compound, _alpha, work, next_random)
  * 
  * def init():             # <<<<<<<<<<<<<<
@@ -5725,8 +5736,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 static int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 26; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) {__pyx_filename = __pyx_f[1]; __pyx_lineno = 802; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
@@ -5738,42 +5749,42 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":157
+  /* "nlip/word2vec/word2vec_fast.pyx":158
  *     # for sampling (negative and frequent-word downsampling)
  *     cdef unsigned long long next_random
  *     next_random = (2**24) * np.random.randint(0, 2**24) + np.random.randint(0, 2**24)             # <<<<<<<<<<<<<<
  * 
  *     # convert Python structures to primitive types, so we can release the GIL
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":214
+  /* "nlip/word2vec/word2vec_fast.pyx":215
  *     # for sampling (negative and frequent-word downsampling)
  *     cdef unsigned long long next_random
  *     next_random = (2**24) * np.random.randint(0, 2**24) + np.random.randint(0, 2**24)             # <<<<<<<<<<<<<<
  * 
  *     # convert Python structures to primitive types, so we can release the GIL
  */
-  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__3 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_16777216); if (unlikely(!__pyx_tuple__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":222
+  /* "nlip/word2vec/word2vec_fast.pyx":223
  *     sample_int = model.index2sample
  *     i = 0
  *     for word in example[1:]:             # <<<<<<<<<<<<<<
  *         if sample and sample_int[word] < random_int32(&next_random): # subsampling
  *             continue
  */
-  __pyx_slice__5 = PySlice_New(__pyx_int_1, Py_None, Py_None); if (unlikely(!__pyx_slice__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 222; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_slice__5 = PySlice_New(__pyx_int_1, Py_None, Py_None); if (unlikely(!__pyx_slice__5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 223; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_slice__5);
   __Pyx_GIVEREF(__pyx_slice__5);
 
@@ -5843,41 +5854,41 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":131
+  /* "nlip/word2vec/word2vec_fast.pyx":132
  *     return next_random
  * 
  * def train_sentence(model, sentence, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
  *     cdef int negative = model.negative
  *     cdef int sample = (model.sample != 0)
  */
-  __pyx_tuple__13 = PyTuple_Pack(26, __pyx_n_s_model, __pyx_n_s_sentence, __pyx_n_s_alpha, __pyx_n_s_syn0, __pyx_n_s_work, __pyx_n_s_negative, __pyx_n_s_sample, __pyx_n_s_syn0_2, __pyx_n_s_syn1, __pyx_n_s_work_2, __pyx_n_s_alpha_2, __pyx_n_s_size, __pyx_n_s_indices, __pyx_n_s_reduced_windows, __pyx_n_s_sentence_len, __pyx_n_s_window, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_result, __pyx_n_s_ns_table, __pyx_n_s_ns_table_len, __pyx_n_s_next_random, __pyx_n_s_sample_int, __pyx_n_s_word, __pyx_n_s_item); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__13 = PyTuple_Pack(26, __pyx_n_s_model, __pyx_n_s_sentence, __pyx_n_s_alpha, __pyx_n_s_syn0, __pyx_n_s_work, __pyx_n_s_negative, __pyx_n_s_sample, __pyx_n_s_syn0_2, __pyx_n_s_syn1, __pyx_n_s_work_2, __pyx_n_s_alpha_2, __pyx_n_s_size, __pyx_n_s_indices, __pyx_n_s_reduced_windows, __pyx_n_s_sentence_len, __pyx_n_s_window, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_result, __pyx_n_s_ns_table, __pyx_n_s_ns_table_len, __pyx_n_s_next_random, __pyx_n_s_sample_int, __pyx_n_s_word, __pyx_n_s_item); if (unlikely(!__pyx_tuple__13)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(5, 0, 26, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_auto_homes_jm864_python_nlip_py, __pyx_n_s_train_sentence, 131, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(5, 0, 26, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_auto_homes_jm864_python_nlip_py, __pyx_n_s_train_sentence, 132, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "nlip/word2vec/word2vec_fast.pyx":191
+  /* "nlip/word2vec/word2vec_fast.pyx":192
  *                 next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], indices[j], _alpha, work, next_random)
  * 
  * def train_tuple(model, example, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
  *     cdef int negative = model.negative
  *     cdef int sample = (model.sample != 0)
  */
-  __pyx_tuple__15 = PyTuple_Pack(22, __pyx_n_s_model, __pyx_n_s_example, __pyx_n_s_alpha, __pyx_n_s_syn0, __pyx_n_s_work, __pyx_n_s_negative, __pyx_n_s_sample, __pyx_n_s_syn0_2, __pyx_n_s_syn1, __pyx_n_s_work_2, __pyx_n_s_alpha_2, __pyx_n_s_size, __pyx_n_s_compound, __pyx_n_s_indices, __pyx_n_s_reduced_window, __pyx_n_s_sentence_len, __pyx_n_s_i, __pyx_n_s_ns_table, __pyx_n_s_ns_table_len, __pyx_n_s_next_random, __pyx_n_s_sample_int, __pyx_n_s_word); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__15 = PyTuple_Pack(21, __pyx_n_s_model, __pyx_n_s_example, __pyx_n_s_alpha, __pyx_n_s_syn0, __pyx_n_s_work, __pyx_n_s_negative, __pyx_n_s_sample, __pyx_n_s_syn0_2, __pyx_n_s_syn1, __pyx_n_s_work_2, __pyx_n_s_alpha_2, __pyx_n_s_size, __pyx_n_s_compound, __pyx_n_s_indices, __pyx_n_s_reduced_window, __pyx_n_s_i, __pyx_n_s_ns_table, __pyx_n_s_ns_table_len, __pyx_n_s_next_random, __pyx_n_s_sample_int, __pyx_n_s_word); if (unlikely(!__pyx_tuple__15)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(5, 0, 22, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_auto_homes_jm864_python_nlip_py, __pyx_n_s_train_tuple, 191, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(5, 0, 21, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_auto_homes_jm864_python_nlip_py, __pyx_n_s_train_tuple, 192, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "nlip/word2vec/word2vec_fast.pyx":236
+  /* "nlip/word2vec/word2vec_fast.pyx":239
  *             next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], compound, _alpha, work, next_random)
  * 
  * def init():             # <<<<<<<<<<<<<<
  *     """
  *     Precompute function `sigmoid(x) = 1 / (1 + exp(-x))`, for x values discretized
  */
-  __pyx_tuple__17 = PyTuple_Pack(7, __pyx_n_s_i, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_expected, __pyx_n_s_size, __pyx_n_s_d_res, __pyx_n_s_p_res); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__17 = PyTuple_Pack(7, __pyx_n_s_i, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_expected, __pyx_n_s_size, __pyx_n_s_d_res, __pyx_n_s_p_res); if (unlikely(!__pyx_tuple__17)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(0, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_auto_homes_jm864_python_nlip_py, __pyx_n_s_init, 236, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(0, 0, 7, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_auto_homes_jm864_python_nlip_py, __pyx_n_s_init, 239, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6264,48 +6275,48 @@ PyMODINIT_FUNC PyInit_word2vec_fast(void)
  */
   __pyx_v_4nlip_8word2vec_13word2vec_fast_ONEF = ((__pyx_t_4nlip_8word2vec_13word2vec_fast_floatX_t)1.0);
 
-  /* "nlip/word2vec/word2vec_fast.pyx":131
+  /* "nlip/word2vec/word2vec_fast.pyx":132
  *     return next_random
  * 
  * def train_sentence(model, sentence, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
  *     cdef int negative = model.negative
  *     cdef int sample = (model.sample != 0)
  */
-  __pyx_t_7 = PyCFunction_NewEx(&__pyx_mdef_4nlip_8word2vec_13word2vec_fast_1train_sentence, NULL, __pyx_n_s_nlip_word2vec_word2vec_fast); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyCFunction_NewEx(&__pyx_mdef_4nlip_8word2vec_13word2vec_fast_1train_sentence, NULL, __pyx_n_s_nlip_word2vec_word2vec_fast); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_train_sentence, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_train_sentence, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":191
+  /* "nlip/word2vec/word2vec_fast.pyx":192
  *                 next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], indices[j], _alpha, work, next_random)
  * 
  * def train_tuple(model, example, alpha, _syn0, _work):             # <<<<<<<<<<<<<<
  *     cdef int negative = model.negative
  *     cdef int sample = (model.sample != 0)
  */
-  __pyx_t_7 = PyCFunction_NewEx(&__pyx_mdef_4nlip_8word2vec_13word2vec_fast_3train_tuple, NULL, __pyx_n_s_nlip_word2vec_word2vec_fast); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyCFunction_NewEx(&__pyx_mdef_4nlip_8word2vec_13word2vec_fast_3train_tuple, NULL, __pyx_n_s_nlip_word2vec_word2vec_fast); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_train_tuple, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_train_tuple, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":236
+  /* "nlip/word2vec/word2vec_fast.pyx":239
  *             next_random = fast_sentence_sg_neg(negative, ns_table, ns_table_len, syn0, syn1, size, indices[i], compound, _alpha, work, next_random)
  * 
  * def init():             # <<<<<<<<<<<<<<
  *     """
  *     Precompute function `sigmoid(x) = 1 / (1 + exp(-x))`, for x values discretized
  */
-  __pyx_t_7 = PyCFunction_NewEx(&__pyx_mdef_4nlip_8word2vec_13word2vec_fast_5init, NULL, __pyx_n_s_nlip_word2vec_word2vec_fast); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyCFunction_NewEx(&__pyx_mdef_4nlip_8word2vec_13word2vec_fast_5init, NULL, __pyx_n_s_nlip_word2vec_word2vec_fast); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_init, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_init, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "nlip/word2vec/word2vec_fast.pyx":277
+  /* "nlip/word2vec/word2vec_fast.pyx":280
  *         return 2
  * 
  * FAST_VERSION = init()  # initialize the module             # <<<<<<<<<<<<<<
  */
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_init); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_init); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_1 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -6318,14 +6329,14 @@ PyMODINIT_FUNC PyInit_word2vec_fast(void)
     }
   }
   if (__pyx_t_1) {
-    __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   } else {
-    __pyx_t_7 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyObject_CallNoArg(__pyx_t_2); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_FAST_VERSION, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 277; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_FAST_VERSION, __pyx_t_7) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 280; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
   /* "nlip/word2vec/word2vec_fast.pyx":1
