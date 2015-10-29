@@ -153,7 +153,7 @@ class Word2Vec():
         logger.info("correlation on development set %.5f (p %.2e)" % cor)
         return Embeddings(embeddings, self.index2name, self.index2count)
 
-    def train_tuples(self, corpus_infile, counts_infile, phrase_str,
+    def train_tuples(self, corpus_infile, counts_infile,
             epochs=1, report_freq=20):
         if len(self.index2sample) == 0:
             logger.error("attempted to start training but vocabulary has not been loaded")
@@ -162,8 +162,8 @@ class Word2Vec():
         # count the number of phrase vectors to be learned
         vocabsize = 0
         with h5py.File(counts_infile, "r") as fcount:
-            phrase_index2count = fcount[phrase_str+"_index2count"][:]
-            phrase_index2name = fcount[phrase_str+"_index2name"][:]
+            phrase_index2count = fcount["index2count"][:]
+            phrase_index2name = fcount["index2name"][:]
             vocabsize = len(phrase_index2count)
 
         # initialise temporary work memory and phrase vectors
