@@ -79,7 +79,7 @@ class Embeddings():
 
     def save(self, h5_outfile):
         with h5py.File(h5_outfile, 'w') as f:
-            if len(A) > 0:
+            if len(self.A) > 0:
                 f.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
             f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))
             dt = h5py.special_dtype(vlen=str)
