@@ -40,18 +40,17 @@ class Embeddings():
         self.name2index = {}
         self.index2count = []
         self.A = []
-        self.f = None
         if isinstance(arg1, str):
-            self.f = h5py.File(arg1)
-            self.A = self.f["A"][:]
-            self.shape = self.A.shape
-            self.index2name = self.f["index2name"][:]
-            if isinstance(self.index2name[0], (list, np.ndarray)):
-                self.name2index = {tuple(e):i for i,e in enumerate(self.index2name)}
-            else:
-                self.name2index = {e:i for i,e in enumerate(self.index2name)}
-            if "index2count" in self.f:
-                self.index2count = self.f["index2count"][:]
+            with h5py.File(arg1) as fin:
+                self.A = fin["A"][:]
+                self.shape = self.A.shape
+                self.index2name = fin["index2name"][:]
+                if isinstance(self.index2name[0], (list, np.ndarray)):
+                    self.name2index = {tuple(e):i for i,e in enumerate(self.index2name)}
+                else:
+                    self.name2index = {e:i for i,e in enumerate(self.index2name)}
+                if "index2count" in fin:
+                    self.index2count = fin["index2count"][:]
         elif isinstance(arg1, (np.ndarray, list)):
             self.A = np.asarray(arg1, dtype=floatX)
             self.shape = self.A.shape
@@ -74,13 +73,10 @@ class Embeddings():
     def word(self, word):
         return self.A[self.name2index[word]]
 
-    def close(self):
-        self.f.close()
-
     def save(self, h5_outfile):
-        with h5py.File(h5_outfile, 'w') as f:
+        with h5py.File(h5_outfile, 'w') as fout:
             if len(self.A) > 0:
-                f.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
-            f.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))
+                fout.create_dataset("A", data=np.asarray(self.A,dtype=floatX))
+            fout.create_dataset("index2count", data=np.asarray(self.index2count,dtype=np.int32))
             dt = h5py.special_dtype(vlen=str)
-            f.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
+            fout.create_dataset("index2name", data=np.array(self.index2name,dtype=dt))
