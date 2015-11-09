@@ -17,3 +17,9 @@ def get_phrase_window(indices, length, k=None):
         k = length
     distances = (min([abs(l-i) for i in indices]) for l in range(length))
     return _sort_tuples(indices, distances, k)
+
+def get_fast_window(indices, length, centre=1):
+    exclude = set(indices)
+    return (a for b in zip_longest(range(indices[centre], -1, -1),
+                                   range(indices[centre]+1, length))
+            for a in b if a is not None and a not in exclude)
