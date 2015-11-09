@@ -13,9 +13,14 @@ def similarity(arg1, test_infile):
         if len(arg1) == 2:
             lf = arg1[0]
             emb = arg1[1]
-            ours = np.array([1-cosine(
-                np.dot(lf.word(x[0][0]),emb.word(x[0][1])),
-                np.dot(lf.word(x[1][0]),emb.word(x[1][1]))) for x in test])
+            if lf.A.shape[2] == lf.A.shape[1]+1:
+                ours = np.array([1-cosine(
+                    np.dot(lf.word(x[0][0]),np.hstack((emb.word(x[0][1]),[1]))),
+                    np.dot(lf.word(x[1][0]),np.hstack((emb.word(x[1][1]),[1])))) for x in test])
+            else:
+                ours = np.array([1-cosine(
+                    np.dot(lf.word(x[0][0]),emb.word(x[0][1])),
+                    np.dot(lf.word(x[1][0]),emb.word(x[1][1]))) for x in test])
             return spearmanr(gold,ours)
         return TypeError("Invalid input format")
     elif isinstance(arg1,Embeddings):
