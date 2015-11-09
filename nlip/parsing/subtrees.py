@@ -1,11 +1,12 @@
 from collections import namedtuple, defaultdict
 from itertools import product
 
+Phrases = namedtuple("Phrases", ["an", "dn", "svo", "src", "orc"])
+_rel_pron = set(("WDT","WP"))
+
 def find_phrases(tags, grs):
     """Return the position of all words that are part of phrases"""
-    Phrases = namedtuple("Phrases", ["an", "dn", "svo", "src", "orc"])
     phrases = Phrases(an=[], dn=[], svo=[], src=[], orc=[])
-    rel_pron = ["WDT","WP"]
     vdict = defaultdict(lambda: ([],[])) # verb -> ([subjs],[objs])
     v2srp = defaultdict(list)  # verb -> subject relative pron
     v2orp = defaultdict(list)  # verb -> object relative pron
@@ -27,13 +28,13 @@ def find_phrases(tags, grs):
             if tags[head].startswith("VB"):
                 if tags[dep].startswith("NN"):
                     vdict[head][0].append(dep)
-                elif tags[dep] in rel_pron:
+                elif tags[dep] in _rel_pron:
                     v2srp[head].append(dep)
         if gr[0] == "dobj":
             if tags[head].startswith("VB"):
                 if tags[dep].startswith("NN"):
                     vdict[head][1].append(dep)
-                elif tags[dep] in rel_pron:  # WDT, WP
+                elif tags[dep] in _rel_pron:  # WDT, WP
                     v2orp[head].append(dep)
         if gr[0] == "acl:relcl":
             if tags[head].startswith("NN") and tags[dep].startswith("VB"):
