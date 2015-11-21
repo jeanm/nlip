@@ -1,6 +1,7 @@
 import numpy as np
 import h5py
 from math import floor, pow, log10
+from nlip import Embeddings
 
 def smart_open(filename, mode):
     if filename.endswith('.gz'):
@@ -36,7 +37,7 @@ def load_plaintext_vecs(filename):
     vecs = np.zeros((len(vecs_raw), len(vecs_raw[0])), dtype=np.float32)
     for i in range(len(vecs)):
         vecs[i] = np.asarray(vecs_raw[i], dtype=np.float32)
-    return Embeddings(A=vecs,index2word=words)
+    return Embeddings(vecs,words)
 
 ## Load vectors in word2vec binary format, return Embeddings object
 def load_word2vec_vecs(filename):
@@ -56,7 +57,7 @@ def load_word2vec_vecs(filename):
                     word.append(char)
             vecs[line_no] = np.fromstring(f.read(binary_len), dtype=np.float32)
             words.append(b''.join(word).decode())
-    return Embeddings(A=vecs, index2word=words)
+    return Embeddings(vecs, words)
 
 ## Load vectors in sparse format, return word list and scipy.sparse.csr_matrix
 # The format is:
