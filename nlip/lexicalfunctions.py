@@ -1,7 +1,6 @@
 import numpy as np
 import h5py
 from scipy import sparse
-from nlip.utils import smart_open
 from nlip import floatX
 
 class LexicalFunctions():

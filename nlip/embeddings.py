@@ -2,7 +2,6 @@ import numpy as np
 import h5py
 from scipy import sparse
 from sklearn.neighbors import NearestNeighbors
-from nlip.utils import smart_open
 from nlip import floatX
 
 class Embeddings():
