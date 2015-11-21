@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 class Word2Vec():
 
     def __init__(self, dimension=100, alpha=0.025, window=5, negative=5,
-            sample=1e-3, dev_data=None):
+                 sample=1e-3, dev_data=None):
         self.name2index = {} # string -> word index
         self.index2name = [] # word index -> string
         self.index2count = [] # word index -> word count
@@ -79,20 +79,16 @@ class Word2Vec():
         self._downsample_vocab()
         # build the table for drawing random words (for negative sampling)
         self._make_ns_table()
-        # set initial input/projection and hidden weights
-        self.reset_weights()
 
-    def load_vocab(self, vocab_infile):
-        self.index2name = []
-        self.index2count = []
-        with smart_open(vocab_infile, 'r') as f:
-            for line_num,line in enumerate(f):
-                tokens = line.strip().split()
-                self.index2name.append(tokens[0])
-                self.index2count.append(int(tokens[1]))
+    def load_vocab(self, counts_infile):
+        with h5py.File(counts_infile, "r") as fin:
+            self.index2name = fin["index2name"][:]
+            self.index2count = fin["index2count"][:]
         logger.info("loaded a word vocabulary of size %s", si(len(self.index2name)))
         self.name2index = {e:i for i,e in enumerate(self.index2name)}
         self._finalise_vocab()
+        # set context vectors to zero
+        self.reset_weights()
 
     def reset_weights(self, what=None):
         vocabsize = len(self.index2name)
@@ -214,4 +210,5 @@ class Word2Vec():
         self.index2name = contexts.index2name
         self.index2count = contexts.index2count
         self.name2index = {e:i for i,e in enumerate(self.index2name)}
+        logger.info('loaded a %s x %s context matrix', si(len(self.index2name)), si(self.dim))
         self._finalise_vocab()
