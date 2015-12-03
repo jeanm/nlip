@@ -4,6 +4,7 @@ import json
 import numpy as np
 from nlip.utils import smart_open
 from nlip import Embeddings, LexicalFunctions
+from collections import Counter
 
 def similarity(arg1, test_infile):
     with smart_open(test_infile, "r") as f:
@@ -32,31 +33,50 @@ def similarity(arg1, test_infile):
         return spearmanr(gold,ours)
     return TypeError("Invalid input format")
 
+# average precision
+def _ap(target, predicted, num_targets):
+    score = 0.0
+    num_hits = 0.0
+    for i,p in enumerate(predicted):
+        if p == target:# and p not in predicted[:i]:
+            num_hits += 1.0
+            score += num_hits / (i+1.0)
+    return score / num_targets
+
 def meanap(relpr_s, relpr_o, verb_s, verb_o, noun, test_infile):
     with smart_open(test_infile, "r") as f:
-        # SBJ/OBJ targetnoun noun relpr verb noun
         test = json.load(f)
     # extract target nouns
-    target_nouns  = [t for _,t,*_ in test]
+    target_nouns  = set(t for _,t,*_ in test)
+    counts = Counter(t for _,t,*_ in test)
     # compose relative clauses
     relative_clauses = []
     for which, t, n1, relpr, v, n2 in test:
+        #relative_clauses.append((t, np.dot(verb_o.word(v), noun.word(n2))))
         if which == "SBJ":
-            relative_clauses.append((t, np.dot(relpr_s.word(relpr),
-                np.outer(noun.word(n1),
-                         np.dot(verb_o.word(v),noun.word(n2))).flatten())))
+            #relative_clauses.append((t, noun.word(n1)+noun.word(v)+noun.word(n2)))
+            #relative_clauses.append((t, noun.word(v)+noun.word(n2)))
+            #relative_clauses.append((t, noun.word(n2)))
+            #relative_clauses.append((t, noun.word(n1)+np.dot(verb_o.word(v),noun.word(n2))))
+            #relative_clauses.append((t, np.dot(relpr_s.word(relpr),
+            #    np.outer(noun.word(n1),
+            #             noun.word(v)+noun.word(n2)).flatten())))
+            relative_clauses.append((t, np.dot(relpr_s.word(relpr), np.outer(noun.word(n1), np.dot(verb_o.word(v),noun.word(n2))).flatten())))
         else:
-            relative_clauses.append((t,np.dot(relpr_o.word(relpr),
-                np.outer(noun.word(n1),
-                         np.dot(verb_s.word(v),noun.word(n2))).flatten())))
-    score = 0
-    targets = set(target_nouns)
-    for target in targets:
+            #relative_clauses.append((t, noun.word(n1)+noun.word(v)+noun.word(n2)))
+            #relative_clauses.append((t, noun.word(v)+noun.word(n2)))
+            #relative_clauses.append((t, noun.word(n2)))
+            #relative_clauses.append((t, noun.word(n1)+np.dot(verb_s.word(v),noun.word(n2))))
+            #relative_clauses.append((t, np.dot(relpr_o.word(relpr),
+            #    np.outer(noun.word(n1),
+            #             noun.word(v)+noun.word(n2)).flatten())))
+            relative_clauses.append((t,np.dot(relpr_o.word(relpr), np.outer(noun.word(n1), np.dot(verb_s.word(v),noun.word(n2))).flatten())))
+    scores = []
+    for target in target_nouns:
+        #print(target)
         predicted = [(t, 1-cosine(noun.word(target),v)) for t,v in relative_clauses]
         predicted.sort(key=lambda x: x[1], reverse=True)
-        num_hits = 0
-        for i,p in enumerate(predicted):
-          if p[0] == target:
-              num_hits += 1.0
-              score += num_hits / (i+1.0)
-    return score / len(targets)
+        ap = _ap(target, [t for t,*_ in predicted], counts[target])
+        #print((target, [(t.upper(),r) if t == target else (t,r) for t,_,r in predicted]), ap)
+        scores.append(ap)
+    return np.mean(scores)
