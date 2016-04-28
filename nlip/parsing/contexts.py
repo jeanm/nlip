@@ -8,8 +8,9 @@ def _sort_tuples(indices, window, k):
 def get_window(index, length, k=2):
     """Return a list of tuples (pos, dist_from_centre) for index's window"""
     start_win = max(0, index - k)
-    end_win = min(length - 1, index + k)
-    return sorted(((pos,abs(index-pos)) for pos in range(start_win, end_win+1)
+    end_win = min(length, index + k + 1)
+    #return [pos for pos in range(start_win, end_win) if pos != index]
+    return sorted(((pos,abs(index-pos)) for pos in range(start_win, end_win)
             if pos != index), key=lambda x: x[1])
 
 def get_phrase_window(indices, length, k=None):
